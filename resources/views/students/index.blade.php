@@ -4,6 +4,10 @@
 
 @section('header', 'Students')
 
+@section('sidebar')
+    @include('layouts.tutorial_sidebar')
+@endsection
+
 @section('create_button')
     <a href="students/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Student</a>
 @endsection
@@ -21,6 +25,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Guardian</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +34,7 @@
                         <td>{{ $student->first_name }}</td>
                         <td>{{ $student->last_name }}</td>
                         <td>{{ $student->guardian->first_name }} {{ $student->guardian->last_name }}</td>
+                    <td><a href="/students/{{$student->id}}/edit" class="btn btn-warning btn-sm">Edit</a></td>
                     </tr>
                     @endforeach
                     

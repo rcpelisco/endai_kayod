@@ -1,15 +1,15 @@
 @extends('layouts.master')
 
-@section('title', 'Guardians')
+@section('title', 'Products')
 
-@section('header', 'Guardians')
+@section('header', 'Products')
 
 @section('sidebar')
-    @include('layouts.tutorial_sidebar')
+    @include('layouts.product_sidebar')
 @endsection
 
 @section('create_button')
-    <a href="guardians/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Guardian</a>
+    <a href="products/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Product</a>
 @endsection
 
 @section('stylesheets')
@@ -22,21 +22,22 @@
             <table class="table" id="datatable">
                 <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Contact no.</th>
-                        <th>Address</th>
+                        <th>Product name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($guardians as $guardian)
+                    @foreach($products as $product) 
                     <tr>
-                        <td>{{ $guardian->first_name }}</td>
-                        <td>{{ $guardian->last_name }}</td>
-                        <td>{{ $guardian->contact_number }}</td>
-                        <td>{{ $guardian->address }}</td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->quantity }}</td>
+                        <td>{{ $product->price}}</td>
+                        <td><a href="products/{{ $product->id }}/buy" class="btn btn-primary btn-sm">Buy Item</a></td>
                     </tr>
                     @endforeach
+                    
                 </tbody>
             </table>
         </div>

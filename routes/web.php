@@ -15,10 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/services', function () {
-    return view('services');
-});
+// Route::get('/services', function () {
+//     return view('services');
+// });
 
 Route::resource('tutorials','TutorialsController');
 Route::resource('guardians','GuardiansController');
 Route::resource('students','StudentsController');
+
+Route::resource('products','ProductsController');
+Route::get('products/{product}/buy', ['uses' => 'ProductsController@buy', 'as' => 'products.buy']);
+Route::match(['put', 'patch'],'products/{product}', 
+    ['uses' => 'ProductsController@updateQuantity', 'as' => 'products.updateQuantity']);
+
+Route::resource('enrolled','EnrolledController');

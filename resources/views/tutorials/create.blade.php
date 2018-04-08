@@ -4,9 +4,12 @@
 
 @section('header', 'Add Lesson')
 
+@section('sidebar')
+    @include('layouts.tutorial_sidebar')
+@endsection
+
 @section('content')
     {!! Form::open(['action' => 'TutorialsController@store' , 'method' => 'POST']) !!}
-        <div class="row">
             <div class="col-6">
                 {{Form::label('title' , 'Title')}}
                 {{Form::text('title' , '', ['class' => 'form-control' , 'placeholder' => 'Title'])}}
@@ -14,9 +17,8 @@
             
             <div class="col-6">
                 {{Form::label('description' , 'Description')}}
-                {{Form::text('description' , '', ['class' => 'form-control' , 'placeholder' => 'Description'])}}
+                {{Form::textarea('description' , '', ['class' => 'form-control' , 'placeholder' => 'Description'])}}
             </div>
-        </div>
 
         <div class="form-group">
             {{Form::label('price' , 'Price')}}

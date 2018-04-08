@@ -51,13 +51,15 @@ class StudentsController extends Controller
         $this->validate($request,[
             'first_name' =>'required',
             'last_name' =>'required',
-            'date_of_birth' =>'required'
+            'date_of_birth' =>'required',
+            'gender' =>'required',
         ]);
 
         $student = new Student();
         $student->first_name = $request->input('first_name');
         $student->last_name = $request->input('last_name');
         $student->date_of_birth = $request->input('date_of_birth');
+        $student->gender = $request->input('gender');
         $student->guardian_id = $request->input('guardian_id');
 
         $student->save();
@@ -85,7 +87,20 @@ class StudentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $student = Student::find($id);
+        
+        $guardians = Guardian::all('id', 'first_name', 'last_name');
+
+        $guardians = $guardians->map(function($item, $key) {
+            return [
+                'id' => $item['id'],
+                'name' => $item['first_name'] . ' ' . $item['last_name']
+            ];
+        });
+        
+        $guardians = $guardians->pluck('name', 'id');
+
+        return view('students.edit')->with('data', ['student' => $student, 'guardians' => $guardians]);
     }
 
     /**
@@ -97,7 +112,23 @@ class StudentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'first_name' =>'required',
+            'last_name' =>'required',
+            'date_of_birth' =>'required',
+            'gender' =>'required',
+        ]);
+
+        $student = Student::find($id);
+        $student->first_name = $request->input('first_name');
+        $student->last_name = $request->input('last_name');
+        $student->date_of_birth = $request->input('date_of_birth');
+        $student->gender = $request->input('gender');
+        $student->guardian_id = $request->input('guardian_id');
+
+        $student->save();
+
+        return redirect('/students');
     }
 
     /**

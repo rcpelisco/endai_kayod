@@ -8412,3 +8412,11 @@ body {
   display: inline-block;
 }
 
+.select-form-control {
+  height: 46px;
+}
+
+.main {
+  padding-bottom: 10px;
+}
+

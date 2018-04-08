@@ -1,15 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Guardians')
+@section('title', 'Enrolled')
 
-@section('header', 'Guardians')
-
-@section('sidebar')
-    @include('layouts.tutorial_sidebar')
-@endsection
+@section('header', $enrolled->tutorial->title)
 
 @section('create_button')
-    <a href="guardians/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Guardian</a>
+    <a href="students/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Student</a>
 @endsection
 
 @section('stylesheets')
@@ -24,19 +20,18 @@
                     <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <th>Contact no.</th>
-                        <th>Address</th>
+                        <th>Guardian</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($guardians as $guardian)
+                    @foreach($students as $student) 
                     <tr>
-                        <td>{{ $guardian->first_name }}</td>
-                        <td>{{ $guardian->last_name }}</td>
-                        <td>{{ $guardian->contact_number }}</td>
-                        <td>{{ $guardian->address }}</td>
+                        <td>{{ $student->first_name }}</td>
+                        <td>{{ $student->last_name }}</td>
+                        <td>{{ $student->guardian->first_name }} {{ $student->guardian->last_name }}</td>
                     </tr>
                     @endforeach
+                    
                 </tbody>
             </table>
         </div>
