@@ -8,7 +8,6 @@
     @include('layouts.tutorial_sidebar')
 @endsection
 
-
 @section('content')
     {!! Form::open(['action' => 'StudentsController@store' , 'method' => 'POST']) !!}
         <div class="row">

@@ -16,9 +16,8 @@
 		</div>
 	</form>
 	<ul class="nav menu">
-		<li class="active"><a href="/"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-		<li class=" "><a href="/products"><em class="fa fa-cart-plus">&nbsp;</em> Products</a></li>
-		<li class=" "><a href="/logs"><em class="fa fa-id-card">&nbsp;</em>Logs</a></li>
+		<li class="active"><a href="/flight_tickets"><em class="fa fa-dashboard">&nbsp;</em>Flight Tickets</a></li>
+		<li class=" "><a href="/airline_companies"><em class="fa fa-cart-plus">&nbsp;</em> Airline Companies</a></li>
 		<li><a href="login.html"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 	</ul>
 </div><!--/.sidebar-->	

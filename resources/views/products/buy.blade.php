@@ -8,7 +8,6 @@
     @include('layouts.product_sidebar')
 @endsection
 
-
 @section('content')
 <div>
     <h2>{{ $product->name }}</h2>

@@ -8,6 +8,10 @@
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
+@import "font-awesome";
+@import "datepicker3";
+@import "_dataTables.bootstrap.min";
+@import "datepicker3";
 @import "styles";
 
 .page-header {

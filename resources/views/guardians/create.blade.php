@@ -8,7 +8,6 @@
     @include('layouts.tutorial_sidebar')
 @endsection
 
-
 @section('content')
     {!! Form::open(['action' => 'GuardiansController@store', 'method' => 'POST']) !!}
         <div class="form-group">

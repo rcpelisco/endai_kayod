@@ -22,10 +22,12 @@ Route::get('/', function () {
 Route::resource('tutorials','TutorialsController');
 Route::resource('guardians','GuardiansController');
 Route::resource('students','StudentsController');
+Route::resource('enrolled','EnrolledController');
 
 Route::resource('products','ProductsController');
 Route::get('products/{product}/buy', ['uses' => 'ProductsController@buy', 'as' => 'products.buy']);
 Route::match(['put', 'patch'],'products/{product}', 
-    ['uses' => 'ProductsController@updateQuantity', 'as' => 'products.updateQuantity']);
+['uses' => 'ProductsController@updateQuantity', 'as' => 'products.updateQuantity']);
 
-Route::resource('enrolled','EnrolledController');
+Route::resource('flight_tickets','FlightTicketsController');
+Route::resource('airline_companies','AirlineCompaniesController');

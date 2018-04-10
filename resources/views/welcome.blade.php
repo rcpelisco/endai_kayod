@@ -35,7 +35,7 @@
 				<div class="panel-body easypiechart-panel">
 					<h4>Flight Ticketing</h4>
 					<div class="easypiechart"><span class="percent">
-						<a href="">
+						<a href="/flight_tickets">
 							<button class="btn btn-primary">Open</button></span>
 						</a>
 					</div>
