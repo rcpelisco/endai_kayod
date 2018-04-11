@@ -21,6 +21,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Guardian</th>
+                        <th>Enrolled in</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -30,7 +31,8 @@
                         <td>{{ $student->first_name }}</td>
                         <td>{{ $student->last_name }}</td>
                         <td>{{ $student->guardian->first_name }} {{ $student->guardian->last_name }}</td>
-                    <td><a href="/students/{{$student->id}}/edit" class="btn btn-warning btn-sm">Edit</a></td>
+                        <td style="background-color:azurex;">Math</td>
+                        <td><a href="/students/{{$student->id}}/edit" class="btn btn-warning btn-sm">Edit</a></td>
                     </tr>
                     @endforeach
                     

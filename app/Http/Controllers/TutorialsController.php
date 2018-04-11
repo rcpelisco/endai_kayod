@@ -66,6 +66,11 @@ class TutorialsController extends Controller
         return $tutorial;
     }
 
+    public function view($id) {
+        $tutorial = Tutorial::find($id);
+        return view('tutorials.view')->with('tutorial', $tutorial);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

@@ -33,8 +33,8 @@
                         <td class="text-capitalize">{{ $tutorial->type }}</td>
                         <td>{{ $tutorial->price }}</td>
                         <td>
-                            <a href="enrolled\{{ $tutorial->id }}" class="btn btn-primary btn-sm">Enroll Student</a>
-                            <a href="enrolled\{{ $tutorial->id }}" class="btn btn-info btn-sm">View Enrolled</a>
+                            <a href="enrolled/{{ $tutorial->id }}" class="btn btn-primary btn-sm">Enroll Student</a>
+                            <a href="enrolled/{{ $tutorial->id }}" class="btn btn-info btn-sm">View Enrolled</a>
                         </td>
                     </tr>
                     @endforeach

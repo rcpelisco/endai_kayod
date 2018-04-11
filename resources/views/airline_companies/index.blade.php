@@ -26,7 +26,9 @@
                 <tbody>
                     @foreach($airline_companies as $airline_company) 
                     <tr>
-                        <td>{{ $airline_company->name }}</td>
+                        <td><a href="airline_companies/{{ $airline_company->id }}">
+                            {{ $airline_company->name }}
+                        </a></td>
                         <td>{{ $airline_company->address }}</td>
                         <td>{{ $airline_company->phone_number }}</td>
                         <td>{{ $airline_company->email }}</td>

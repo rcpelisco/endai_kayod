@@ -37,14 +37,18 @@ class AirlineCompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'address' => 'required',
-            'phone_number' => 'required',
-            'email' => 'required',
-            'logo_path' => 'required',
-            'pnr' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'address' => 'required',
+        //     'phone_number' => 'required',
+        //     'email' => 'required',
+        //     'logo_path' => 'required',
+        //     'pnr' => 'required',
+        // ]);
+
+        $filename = time() . '.' . $request->file('logo_path')->extension();
+        $logo_path = $request->file('logo_path')->store('images');
+        $request->file('logo_path')->move(public_path('images'), $logo_path);
 
         $airline_company = new AirlineCompany();
         $airline_company->name = $request->input('name');
@@ -52,7 +56,8 @@ class AirlineCompaniesController extends Controller
         $airline_company->phone_number = $request->input('phone_number');
         $airline_company->email = $request->input('email');
         $airline_company->pnr = $request->input('pnr');
-
+        $airline_company->logo_path = $logo_path;
+        // return $airline_company->logo_path;
         $airline_company->save();
 
         return redirect('/airline_companies');
@@ -66,8 +71,8 @@ class AirlineCompaniesController extends Controller
      */
     public function show($id)
     {
-        $airline_companies = AirlineCompanies::find($id);
-        return view('airline_companies.view');
+        $airline_company = AirlineCompany::find($id);
+        return view('airline_companies.view')->with('airline_company', $airline_company);
     }
 
     /**

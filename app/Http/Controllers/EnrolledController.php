@@ -47,7 +47,7 @@ class EnrolledController extends Controller
     public function show($id)
     {
         $enrolled = Enrolled::find($id);
-        return $enrolled;
+        return view('enrolled.index')->with('enrolled', $enrolled);
     }
 
     /**

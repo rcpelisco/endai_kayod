@@ -3,9 +3,12 @@
 @section('title', 'Students')
 
 @section('header', 'Edit Student Info')
+@section('sidebar')
+    @include('layouts.tutorial_sidebar')
+@endsection
 
 @section('content')
-    {!! Form::open(['action' => ['StudentsController@updateQuantity', $data['student']->id], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['StudentsController@update', $data['student']->id], 'method' => 'POST']) !!}
         <div class="row">
             <div class="col-xs-6">
                 {{Form::label('first_name', 'First name')}}
