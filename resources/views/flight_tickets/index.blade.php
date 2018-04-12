@@ -18,18 +18,22 @@
             <table class="table" id="datatable">
                 <thead>
                     <tr>
-                        <th>Passenger Name</th>
+                        <th>Booking Ref.</th>
+                        <th>Airline PNR</th>
+                        <th>Flight Number</th>
                         <th>Origin</th>
                         <th>Destination</th>
-                        <th>Departure date</th>
-                        <th>Arrival date</th>
-                        <th>Airline</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($flight_tickets as $flight_ticket) 
                     <tr>
-                    <td>{{$flight_ticket->id}}</td>
+                        <td><a href="/flight_tickets/{{ $flight_ticket->id }}">
+                            {{ $flight_ticket->booking_reference }}</a></td>
+                        <td>{{ $flight_ticket->pnr }}</td>
+                        <td>{{ $flight_ticket->flight_number }}</td>
+                        <td>{{ $flight_ticket->origin }}</td>
+                        <td>{{ $flight_ticket->destination }}</td>
                     </tr>
                     @endforeach
                 </tbody>

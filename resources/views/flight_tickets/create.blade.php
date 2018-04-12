@@ -11,17 +11,16 @@
 @section('content')
     <div class="panel">
         <div class="panel-body">
-       
-            {!! Form::open(['action' => 'AirlineCompaniesController@store' , 'method' => 'POST']) !!}
+            {!! Form::open(['action' => 'FlightTicketsController@store' , 'method' => 'POST']) !!}
                 <h3>Flight Itinerary Ticket</h3>
                 <div class="row">
                     <div class="col-xs-4">
                             {{ Form::label('issue_date' , 'Issue date') }}
-                            {{ Form::date('issue_date' , '', ['class' => 'form-control' , 'placeholder' => 'Issue date']) }}
+                            {{ Form::text('issue_date' , '', ['class' => 'form-control datetimepicker' , 'placeholder' => 'Issue date']) }}
                     </div>
                     <div class="col-xs-4">
                             {{ Form::label('booking_date' , 'Booking date') }}
-                            {{ Form::date('booking_date' , '', ['class' => 'form-control' , 'placeholder' => 'Booking date']) }}
+                            {{ Form::text('booking_date' , '', ['class' => 'form-control datetimepicker' , 'placeholder' => 'Booking date']) }}
                     </div>
                     <div class="col-xs-4">
                         {{ Form::label('booking_reference' , 'Booking Reference') }}
@@ -29,10 +28,15 @@
                     </div>
                 </div>
                 <br>
+                <h3>Airline Details</h3>
                 <div class="row">
-                    <div class="col-xs-12">
-                        {{Form::label('airline_id' , 'Airline')}}
-                        {{Form::select('airline_id', $airline_companies, null, ['class' => 'form-control select-form-control'])}}
+                    <div class="col-xs-8">
+                        {{ Form::label('airline_company_id' , 'Airline') }}
+                        {{ Form::select('airline_company_id', $airline_companies, null, ['class' => 'form-control select-form-control']) }}
+                    </div>
+                    <div class="col-xs-4">
+                        {{ Form::label('pnr' , 'PNR') }}
+                        {{ Form::text('pnr' , '', ['class' => 'form-control' , 'placeholder' => 'PNR']) }}
                     </div>
                 </div>
                 <br>
@@ -54,19 +58,19 @@
                 <div class="row">
                     <div class="col-xs-6">
                         {{ Form::label('departure_date' , 'Departure date') }}
-                        {{ Form::date('departure_date' , '', ['class' => 'form-control' , 'placeholder' => 'Departure date']) }}
+                        {{ Form::text('departure_date' , '', ['class' => 'form-control fightdetailsdatetimepicker' , 'placeholder' => 'Departure date']) }}
                     </div>
                     <div class="col-xs-6">
-                        {{ Form::label('arrival_date' , 'Arrival_date') }}
-                        {{ Form::date('arrival_date' , '', ['class' => 'form-control' , 'placeholder' => 'Arrival_date']) }}
+                        {{ Form::label('arrival_date' , 'Arrival date') }}
+                        {{ Form::text('arrival_date' , '', ['class' => 'form-control fightdetailsdatetimepicker' , 'placeholder' => 'Arrival date']) }}
                     </div>
                 </div>
                 <br>
                 <h3>Passenger Details</h3>
                 <div class="row">
                     <div class="col-xs-8">
-                        {{ Form::label('name' , 'Passenger name') }}
-                        {{ Form::text('name' , '', ['class' => 'form-control' , 'placeholder' => 'Passenger name']) }}
+                        {{ Form::label('passenger_name' , 'Passenger name') }}
+                        {{ Form::text('passenger_name' , '', ['class' => 'form-control' , 'placeholder' => 'Passenger name']) }}
                     </div>
                     <div class="col-xs-4">
                         {{ Form::label('ticket_number' , 'Ticket number') }}
@@ -96,4 +100,23 @@
          
         </div>
     </div>
-@endsection  
+@endsection 
+
+@section('scripts')
+<script src="/js/moment.js"></script>
+<script src="/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+    $(function () {
+        $('.datetimepicker').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            useCurrent: false,
+            sideBySide: true,
+        });
+        $('.fightdetailsdatetimepicker').datetimepicker({
+            format: 'MM/DD/YYYY hh:mm A',
+            useCurrent: false,
+            sideBySide: true,
+        });
+    });
+</script>
+@endsection

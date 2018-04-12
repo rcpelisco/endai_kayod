@@ -37,28 +37,25 @@ class AirlineCompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'name' => 'required',
-        //     'address' => 'required',
-        //     'phone_number' => 'required',
-        //     'email' => 'required',
-        //     'logo_path' => 'required',
-        //     'pnr' => 'required',
-        // ]);
+        $this->validate($request, [
+            'name' => 'required',
+            'address' => 'required',
+            'phone_number' => 'required',
+            'logo_path' => 'required',
+        ]);
 
-        $filename = time() . '.' . $request->file('logo_path')->extension();
-        $logo_path = $request->file('logo_path')->store('images');
-        $request->file('logo_path')->move(public_path('images'), $logo_path);
+        $path = $request->file('logo_path')->store('images');
 
         $airline_company = new AirlineCompany();
         $airline_company->name = $request->input('name');
         $airline_company->address = $request->input('address');
         $airline_company->phone_number = $request->input('phone_number');
         $airline_company->email = $request->input('email');
-        $airline_company->pnr = $request->input('pnr');
-        $airline_company->logo_path = $logo_path;
-        // return $airline_company->logo_path;
+        $airline_company->logo_path = $path;
+
         $airline_company->save();
+
+        $request->file('logo_path')->move(public_path('images'), $path);
 
         return redirect('/airline_companies');
     }
@@ -84,7 +81,7 @@ class AirlineCompaniesController extends Controller
     public function edit($id)
     {
         $airline_company = AirlineCompany::find($id);
-        return view('airline_companies.create')->with('airline_company', $airline_company);
+        return view('airline_companies.edit')->with('airline_company', $airline_company);
     }
 
     /**
@@ -100,19 +97,25 @@ class AirlineCompaniesController extends Controller
             'name' => 'required',
             'address' => 'required',
             'phone_number' => 'required',
-            'email' => 'required',
-            'logo_path' => 'required',
             'pnr' => 'required',
         ]);
 
-        $airline_company = AirlineCompany::find();
+        
+        $airline_company = AirlineCompany::find($id);
         $airline_company->name = $request->input('name');
         $airline_company->address = $request->input('address');
         $airline_company->phone_number = $request->input('phone_number');
         $airline_company->email = $request->input('email');
         $airline_company->pnr = $request->input('pnr');
 
+        if($request->hasFile('logo_path')) {
+            $path = $request->file('logo_path')->store('images');
+            $airline_company->logo_path = $path;
+            $request->file('logo_path')->move(public_path('images'), $path);
+        }
+
         $airline_company->save();
+
 
         return redirect('/airline_companies');
     }
@@ -125,6 +128,8 @@ class AirlineCompaniesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $airline_company = AirlineCompany::find($id);
+        $airline_company->delete();
+        return redirect('/airline_companies');
     }
 }
