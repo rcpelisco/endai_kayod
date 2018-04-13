@@ -12,6 +12,9 @@
 */
 
 Route::get('/', function () {
+    if(Auth::guest()) {
+        return redirect('/login');
+    }
     return view('welcome');
 });
 
@@ -31,3 +34,7 @@ Route::match(['put', 'patch'],'products/{product}',
 
 Route::resource('flight_tickets','FlightTicketsController');
 Route::resource('airline_companies','AirlineCompaniesController');
+Route::resource('product_log','ProductLogController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

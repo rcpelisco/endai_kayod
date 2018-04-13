@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Product;
+use App\ProductLog;
 
 class ProductsController extends Controller
 {
@@ -40,11 +42,13 @@ class ProductsController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'quantity' => 'required',
+            'description' => 'required',
             'price' => 'required'
         ]);
 
         $products = new Product();
         $products->name = $request->input('name');
+        $products->description = $request->input('description');
         $products->quantity = $request->input('quantity');
         $products->price = $request->input('price');
         $products->total_sold = 0;
@@ -85,9 +89,18 @@ class ProductsController extends Controller
         ]);
 
         $product = Product::find($id);
-        $product->quantity = $product->quantity - $request->input('quantity');
-
+        $quantity = $request->input('quantity');
+        $product->quantity = $product->quantity - $quantity;
+        $product->total_sold = $product->total_sold + $quantity;
         $product->save();
+
+        $product_log = new ProductLog();
+        $product_log->product_id = $id;
+        $product_log->total_sold = $request->input('quantity') * $product->price;
+        $product_log->quantity = $request->input('quantity');
+        $product_log->sold_by = Auth::id();
+
+        $product_log->save();
 
         return redirect('/products');
     }

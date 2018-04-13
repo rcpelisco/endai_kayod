@@ -19,6 +19,7 @@
                 <thead>
                     <tr>
                         <th>Product name</th>
+                        <th>Description</th>
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Action</th>
@@ -28,6 +29,7 @@
                     @foreach($products as $product) 
                     <tr>
                         <td>{{ $product->name }}</td>
+                        <td>{{ $product->description }}</td>
                         <td>{{ $product->quantity }}</td>
                         <td>{{ $product->price}}</td>
                         <td><a href="products/{{ $product->id }}/buy" class="btn btn-primary btn-sm">Buy Item</a></td>

@@ -20,6 +20,8 @@
     <h3><small>Price: <strong>{{ $product->price }}</strong></small></h3>
     <h3><small>Total: <strong data-quantity="{{ $product->quantity}} 
         "data-price="{{ $product->price }}" id="total_payment">0</strong></small></h3>
+    {{ Form::hidden('product_id', '$product->id') }}
+    {{ Form::hidden('user_id', '$user->id') }}
     {{ Form::hidden('_method', 'PUT') }}
     {{ Form::submit('Submit', ['class' => 'btn btn-primary', 'id' => 'submit_btn'])}}
     {!! Form::close() !!}

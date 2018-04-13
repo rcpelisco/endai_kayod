@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\FlightTicket;
 use App\AirlineCompany;
+use PDF;
 
 class FlightTicketsController extends Controller
 {
@@ -92,7 +93,8 @@ class FlightTicketsController extends Controller
     public function show($id)
     {
         $flight_ticket = FlightTicket::find($id);
-        return $flight_ticket;
+        $pdf = PDF::loadView('flight_tickets.view', $flight_ticket);
+        return $pdf->download('flight_ticket.pdf');
     }
 
     /**
