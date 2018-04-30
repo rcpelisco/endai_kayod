@@ -11,6 +11,7 @@
 @section('content')
     <div class="panel">
         <div class="panel-body">
+            @include('layouts.flight_ticket_alert')
             {!! Form::open(['action' => 'FlightTicketsController@store' , 'method' => 'POST']) !!}
                 <h3>Flight Itinerary Ticket</h3>
                 <div class="row">

@@ -9,8 +9,8 @@ class Enrolled extends Model
     public $table = "enrolled";
     public $primaryKey = 'id';
 
-    public function student() {
-        return $this->belongsTo('App\Student');
+    public function students() {
+        
     }
 
     public function tutorial() {

@@ -82,6 +82,10 @@ class ProductsController extends Controller
         $product = Product::find($id);
         return view('products.buy')->with('product', $product);
     }
+    public function add_stock($id) {
+        $product = Product::find($id);
+        return view('products.add_stock')->with('product', $product);
+    }
 
     public function updateQuantity(Request $request, $id) {
         $this->validate($request,[
@@ -89,19 +93,22 @@ class ProductsController extends Controller
         ]);
 
         $product = Product::find($id);
+        $product_log = new ProductLog();
         $quantity = $request->input('quantity');
-        $product->quantity = $product->quantity - $quantity;
-        $product->total_sold = $product->total_sold + $quantity;
+        if($request->input('type') == 'buy'){
+            $product->quantity = $product->quantity - $quantity;
+        }else{
+            $product->quantity = $product->quantity + $quantity;
+        }
         $product->save();
 
-        $product_log = new ProductLog();
         $product_log->product_id = $id;
+        $product_log->type = $request->input('type');
         $product_log->total_sold = $request->input('quantity') * $product->price;
         $product_log->quantity = $request->input('quantity');
         $product_log->sold_by = Auth::id();
 
         $product_log->save();
-
         return redirect('/products');
     }
 
@@ -125,6 +132,8 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+        return redirect('/products');
     }
 }

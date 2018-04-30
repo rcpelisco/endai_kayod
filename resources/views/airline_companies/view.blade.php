@@ -31,7 +31,7 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    {!! Form::open(['action' => ['AirlineCompaniesController@destroy', $airline_company->id], 'method' => 'POST', 'files' => true]) !!}
+                    {!! Form::open(['action' => ['AirlineCompaniesController@destroy', $airline_company->id], 'method' => 'POST']) !!}
                         <a href="/airline_companies/{{ $airline_company->id }}/edit" class="btn btn-primary">Edit</a>
                         {{ Form::hidden('_method', 'DELETE') }}
                         {{ Form::submit('Delete', ['class'=>'btn btn-danger'])}}

@@ -93,8 +93,9 @@ class FlightTicketsController extends Controller
     public function show($id)
     {
         $flight_ticket = FlightTicket::find($id);
-        $pdf = PDF::loadView('flight_tickets.view', $flight_ticket);
-        return $pdf->download('flight_ticket.pdf');
+        $pdf = PDF::loadView('flight_tickets.view', ['flight_ticket' => $flight_ticket]);
+        return $pdf->stream('flight_ticket.pdf');
+        return view('flight_tickets.view')->with('flight_ticket', $flight_ticket);
     }
 
     /**
@@ -107,10 +108,18 @@ class FlightTicketsController extends Controller
     {
         $flight_ticket = FlightTicket::find($id);
 
+        $airline_companies = AirlineCompany::all();
         $airline_companies = $airline_companies->pluck('name', 'id');
 
-        return view('flight_tickets.create')->with('data', ['flight_ticket' => $flight_ticket
-        , 'airline_companies' => $airline_companies]);
+        $flight_ticket->departure_date = date('d/n/Y G:i A', 
+            strtotime($flight_ticket->departure_date));
+        $flight_ticket->arrival_date = date('d/n/Y G:i A', 
+            strtotime($flight_ticket->arrival_date));
+
+        return view('flight_tickets.edit')->with('data', [
+            'flight_ticket' => $flight_ticket, 
+            'airline_companies' => $airline_companies
+        ]);
     }
 
     /**
@@ -168,6 +177,8 @@ class FlightTicketsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $flight_ticket = FlightTicket::find($id);
+        $flight_ticket->delete();
+        return redirect('/flight_tickets');
     }
 }

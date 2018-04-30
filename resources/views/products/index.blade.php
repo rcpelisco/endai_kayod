@@ -9,7 +9,7 @@
 @endsection
 
 @section('create_button')
-    <a href="products/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Product</a>
+    <a href="products/create" class="btn btn-sm btn-primary" style="margin-bottom:15px; margin-left:10px;">Add Product</a>
 @endsection
 
 @section('content')
@@ -32,7 +32,13 @@
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->quantity }}</td>
                         <td>{{ $product->price}}</td>
-                        <td><a href="products/{{ $product->id }}/buy" class="btn btn-primary btn-sm">Buy Item</a></td>
+                        <td><a href="products/{{ $product->id }}/buy" class="btn btn-success btn-sm" id="buy_btn">Buy Item</a>
+                            <a href="products/{{ $product->id }}/add_stock" class="btn btn-warning btn-sm" id="add_stock_btn">Add Stock</a>
+                        {{-- {!! Form::open(['action' => ['ProductsController@destroy', $product->id], 'method' => 'POST']) !!}
+                        {{ Form::hidden('_method', 'DELETE') }}
+                        {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
+                    {!! Form::close() !!} --}}
+                        </td>
                     </tr>
                     @endforeach
                     

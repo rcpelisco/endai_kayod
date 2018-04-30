@@ -23,6 +23,7 @@
 @section('content')
 <div class="panel">
     <div class="panel-body">
+        @include('layouts.airline_companies_alert')
         {!! Form::open(['action' => 'AirlineCompaniesController@store', 'method' => 'POST', 'files' => true]) !!}
         <div class="row">
             <div class="col-xs-4">

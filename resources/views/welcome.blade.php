@@ -1,6 +1,6 @@
 @extends('layouts.landing')
 
-@section('title', 'Dashboard')
+@section('title', 'HomeMadelene')
 
 @section('header', 'Madelene Business Management')
 

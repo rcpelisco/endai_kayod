@@ -22,6 +22,7 @@
                         <th>Last Name</th>
                         <th>Contact no.</th>
                         <th>Address</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +32,7 @@
                         <td>{{ $guardian->last_name }}</td>
                         <td>{{ $guardian->contact_number }}</td>
                         <td>{{ $guardian->address }}</td>
+                        <td><a href="/guardians/{{$guardian->id}}/edit"><button class="btn sm btn-warning">Edit</button></a></td>
                     </tr>
                     @endforeach
                 </tbody>

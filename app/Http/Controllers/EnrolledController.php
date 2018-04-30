@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Enrolled;
+use App\Tutorial;
 
 class EnrolledController extends Controller
 {
@@ -14,7 +15,8 @@ class EnrolledController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::all();
+        return view('enrolled.index')->with('students', $students);
     }
 
     /**
@@ -27,6 +29,10 @@ class EnrolledController extends Controller
         //
     }
 
+    public function enroll(Illuminate\Http\Request $request) {
+        
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -35,7 +41,27 @@ class EnrolledController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'student_id' => 'required',
+            'tutorial_id' => 'required',
+        ]);
+
+        $enrolled = new Enrolled();
+        $enrolled->student_id = $request->input('student_id');
+        $enrolled->tutorial_id = $request->input('tutorial_id');
+
+        $tutorial = Tutorial::find($request->input('tutorial_id'));
+
+        
+        if($tutorial->type == 'interest') {
+            $enrolled->sessions_left = 15;
+        }
+
+        $enrolled->sessions_left = $request->input('sessions_left');
+        $enrolled->credit = $tutorial->price;
+
+        $enrolled->save();
+        return redirect("/tutorials/{$tutorial->id}/enroll");
     }
 
     /**
@@ -47,7 +73,7 @@ class EnrolledController extends Controller
     public function show($id)
     {
         $enrolled = Enrolled::find($id);
-        return view('enrolled.index')->with('enrolled', $enrolled);
+        var_dump($enrolled);
     }
 
     /**

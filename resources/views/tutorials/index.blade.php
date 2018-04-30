@@ -14,41 +14,75 @@
 
 @section('content')
     <div class="panel panel-default">
-        <div class="panel-body">
-            <table class="table" id="datatable">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Type</th>
-                        <th>Price</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($tutorials as $tutorial) 
-                    <tr>
-                        <td>{{ $tutorial->title }}</td>
-                        <td>{{ $tutorial->description }}</td>
-                        <td class="text-capitalize">{{ $tutorial->type }}</td>
-                        <td>{{ $tutorial->price }}</td>
-                        <td>
-                            <a href="enrolled/{{ $tutorial->id }}" class="btn btn-primary btn-sm">Enroll Student</a>
-                            <a href="enrolled/{{ $tutorial->id }}" class="btn btn-info btn-sm">View Enrolled</a>
-                        </td>
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
+        <div class="panel-body tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab1" data-toggle="tab" aria-expanded="true">Interests</a></li>
+                <li class=""><a href="#tab2" data-toggle="tab" aria-expanded="false">Academics</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="tab1">
+                    <table class="table" id="tutorialsTable">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($tutorials as $tutorial) 
+                                @if($tutorial->type == 'interest')
+                                    <tr>
+                                        <td>{{ $tutorial->title }}</td>
+                                        <td>{{ $tutorial->description }}</td>
+                                        <td>{{ $tutorial->price }}</td>
+                                        <td>
+                                            <a href="tutorials/{{ $tutorial->id }}/enroll" class="btn btn-primary btn-sm">Enroll Student</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="tab2">
+                    <table class="table" id="academicsTable">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($tutorials as $tutorial) 
+                                @if($tutorial->type == 'academic')
+                                    <tr>
+                                        <td>{{ $tutorial->title }}</td>
+                                        <td>{{ $tutorial->description }}</td>
+                                        <td>{{ $tutorial->price }}</td>
+                                        <td>
+                                            <a href="tutorials/{{ $tutorial->id }}/enroll" class="btn btn-primary btn-sm">Enroll Student</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
 <script>
-    $(document).ready( function () {
-        $('#datatable').DataTable();
-    });
+    $(function() {
+        $('#tutorialsTable').DataTable()
+        $('#academicsTable').DataTable()
+    })
 </script>
 @endsection

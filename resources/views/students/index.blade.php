@@ -32,7 +32,7 @@
                         <td>{{ $student->last_name }}</td>
                         <td>{{ $student->guardian->first_name }} {{ $student->guardian->last_name }}</td>
                         <td style="background-color:azurex;">Math</td>
-                        <td><a href="/students/{{$student->id}}/edit" class="btn btn-warning btn-sm">Edit</a></td>
+                        <td><a href="/students/{{$student->id}}/edit" class="btn btn-warning btn-sm"><em class="fa fa-trash"></em></a></td>
                     </tr>
                     @endforeach
                     

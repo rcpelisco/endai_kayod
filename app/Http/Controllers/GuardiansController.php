@@ -74,7 +74,8 @@ class GuardiansController extends Controller
      */
     public function edit($id)
     {
-        //
+        $guardians = Guardian::find($id);
+        return view('guardians.edit')->with('guardians', $guardians);
     }
 
     /**
@@ -86,7 +87,21 @@ class GuardiansController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'first_name' =>'required',
+            'last_name' =>'required',
+            'contact_number' =>'required',
+            'address' =>'required',
+        ]);
+
+        $guardian = Guardian::find($id);
+        $guardian->first_name = $request->input('first_name');
+        $guardian->last_name = $request->input('last_name');
+        $guardian->contact_number = $request->input('contact_number');
+        $guardian->address = $request->input('address');
+        $guardian->save();
+
+        return redirect('/guardians');
     }
 
     /**

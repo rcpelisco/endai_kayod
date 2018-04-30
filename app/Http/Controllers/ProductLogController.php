@@ -39,13 +39,15 @@ class ProductLogController extends Controller
         $this->validate($request, [
             'product_id' => 'required',
             'total_sold' => 'required',
+            'type' => 'type',
             'quantity' => 'required',
         ]);
-
+        
         $product_log = new ProductLog();
         $product_log->total_sold = $request->input('total_sold');
         $product_log->quantity = $request->input('quantity');
         $product_log->product_id = $request->input('product_id');
+        $product_log->type = $request->input('type');
         $product_log->sold_by = Auth::id();
         
         $product_log->save();

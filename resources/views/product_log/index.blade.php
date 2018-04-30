@@ -17,6 +17,7 @@
                         <th>Quantity</th>
                         <th>sold by</th>
                         <th>Total</th>
+                        <th>Transaction</th>
                         <th>Sold date</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                             <td>{{ $product_log->quantity }}</td>
                             <td>{{ $product_log->user->name }}</td>
                             <td>{{ $product_log->total_sold }}</td>
+                            <td>{{ $product_log->type }}</td>
                             <td>{{ $product_log->created_at }}</td>
                     </tr>
                     @endforeach
