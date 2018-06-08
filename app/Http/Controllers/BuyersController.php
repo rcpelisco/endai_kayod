@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Buyer;
+use App\Product;
 use App\ProductLog;
 
-class ProductLogController extends Controller
+class BuyersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +16,7 @@ class ProductLogController extends Controller
      */
     public function index()
     {
-        $product_logs = ProductLog::orderBy('id', 'desc')->get()->sortByDesc('id');
-        foreach($product_logs as $product_log) {
-            $product_log->buyer = $product_log->buyer ? $product_log->buyer : (object) ['name' => 'n/a'];
-            $product_log->formatted_created_at = date('F d, Y H:i A', strtotime($product_log->created_at));
-        }
-        return view('product_log.index')->with('product_logs', $product_logs);
+        return view('buyers.index')->with('buyers', Buyer::all());
     }
 
     /**
@@ -29,7 +26,7 @@ class ProductLogController extends Controller
      */
     public function create()
     {
-        //
+        return view('buyers.create');
     }
 
     /**
@@ -41,22 +38,16 @@ class ProductLogController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'product_id' => 'required',
-            'total_sold' => 'required',
-            'type' => 'type',
-            'quantity' => 'required',
+            'name' => 'required',
         ]);
-        
-        $product_log = new ProductLog();
-        $product_log->total_sold = $request->input('total_sold');
-        $product_log->quantity = $request->input('quantity');
-        $product_log->product_id = $request->input('product_id');
-        $product_log->type = $request->input('type');
-        $product_log->sold_to = $request->input('sold_to');
-        $product_log->sold_by = Auth::id();
-        
-        $product_log->save();
-        return redirect('/product_log');
+
+        $buyer = new Buyer();
+        $buyer->name = $request->input('name');
+        $buyer->address = $request->input('address');
+        $buyer->contact_no = $request->input('contact_no');
+        $buyer->save();
+
+        return redirect('/buyers');
     }
 
     /**
@@ -67,7 +58,31 @@ class ProductLogController extends Controller
      */
     public function show($id)
     {
-        //
+        $buyer = Buyer::find($id);
+        $buyer->products_bought = collect();
+        foreach($buyer->transaction_log as $entry) {
+            $buyer->products_bought = $buyer->products_bought
+                ->push(Product::select('id', 'name', 'price')
+                ->find($entry->product_id))->unique();
+        }
+        foreach($buyer->products_bought as $product) {
+
+            $total_bought = ProductLog::select('quantity')->where([
+                ['product_id', $product->id],
+                ['sold_to', $buyer->id],
+            ])->get();
+            
+            $quantity = 0;
+
+            foreach($total_bought as $item) {
+                $quantity += $item->quantity;
+            }
+
+            $product->total_bought = $quantity;
+        }
+
+        // return '<pre>' . json_encode($buyer, JSON_PRETTY_PRINT) . '</pre>';
+        return view('buyers.view')->with('buyer', $buyer);
     }
 
     /**
@@ -101,6 +116,8 @@ class ProductLogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $buyer = Buyer::find($id);
+        $buyer->delete();
+        return redirect('/buyers');
     }
 }

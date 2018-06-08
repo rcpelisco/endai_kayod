@@ -109,6 +109,9 @@
 <script src="/js/bootstrap-datetimepicker.min.js"></script>
 <script>
     $(function () {
+        $('.error_close').click(function(){
+            $(this).hide()
+        })
         $('.datetimepicker').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             useCurrent: false,

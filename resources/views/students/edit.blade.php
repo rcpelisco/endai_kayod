@@ -46,7 +46,7 @@
                 {{Form::select('guardian_id', $data['guardians'], $data['student']->guardian_id, ['class' => 'form-control select-form-control'])}}
             </div>
 
-            {{Form::hidden('_method', 'PUT')}}
+            {{ Form::hidden('_method', 'PUT') }}
             {{ Form::submit('Submit', ['class'=>'btn btn-primary'])}}
         {!! Form::close() !!}
     </div>

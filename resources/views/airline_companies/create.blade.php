@@ -84,5 +84,7 @@
             $('#airline_logo').attr('src', e.target.result)
         }
     }
+    
+    $(() => $('.error_close').click(() => $(this).hide()))
 </script>
 @endsection

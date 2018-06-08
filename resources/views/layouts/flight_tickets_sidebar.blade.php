@@ -16,8 +16,18 @@
 		</div>
 	</form>
 	<ul class="nav menu">
-		<li class="active"><a href="/flight_tickets"><em class="fa fa-dashboard">&nbsp;</em>Flight Tickets</a></li>
-		<li class=" "><a href="/airline_companies"><em class="fa fa-cart-plus">&nbsp;</em> Airline Companies</a></li>
+		<li 
+		@if(explode('/', url()->current())[3] == 'flight_tickets')
+			class="active"
+		@endif
+		><a href="/flight_tickets"><em class="fa fa-dashboard">&nbsp;</em>Flight Tickets</a></li>
+		
+		<li 
+		@if(explode('/', url()->current())[3] == 'airline_companies')
+			class="active"
+		@endif
+		><a href="/airline_companies"><em class="fa fa-cart-plus">&nbsp;</em> Airline Companies</a></li>
+
 		<li><a href="/"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 	</ul>
 </div><!--/.sidebar-->	

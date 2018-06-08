@@ -34,6 +34,7 @@ Route::match(['put', 'patch'],'products/{product}', ['uses' => 'ProductsControll
 Route::resource('flight_tickets','FlightTicketsController');
 Route::resource('airline_companies','AirlineCompaniesController');
 Route::resource('product_log','ProductLogController');
+Route::resource('buyers','BuyersController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

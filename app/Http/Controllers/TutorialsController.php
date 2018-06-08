@@ -16,6 +16,8 @@ class TutorialsController extends Controller
     public function index()
     {
         $tutorials = Tutorial::all();
+        
+        // return '<pre>' . json_encode($tutorials, JSON_PRETTY_PRINT) . '</pre>';
         return view('tutorials.index')->with('tutorials', $tutorials);
     }
 
@@ -98,7 +100,8 @@ class TutorialsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tutorials = Tutorial::find($id);
+        return view('tutorials.edit')->with('tutorials', $tutorials);
     }
 
     /**
@@ -110,7 +113,19 @@ class TutorialsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'title' =>'required',
+            'description' =>'required',
+            'price' =>'required',
+        ]);
+
+        $guardian = Guardian::find($id);
+        $guardian->title = $request->input('title');
+        $guardian->description = $request->input('description');
+        $guardian->price = $request->input('price');
+        $guardian->save();
+
+        return redirect('/tutorials');
     }
 
     /**

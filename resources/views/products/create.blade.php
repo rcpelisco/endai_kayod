@@ -39,4 +39,10 @@
         {!! Form::close() !!}
     </div>
 </div>
-@endsection  
+@endsection
+
+@section('scripts')
+<script>
+    $(() => $('.error_close').click(() => $(this).hide()))
+</script>
+@endsection

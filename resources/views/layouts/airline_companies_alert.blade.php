@@ -19,13 +19,3 @@
         {{session('error')}}
     </div>
 @endif
-
-@section('scripts')
-<script>
-    $(function(){
-        $('.error_close').click(function(){
-            $(this).hide()
-        })
-    })
-</script>
-@endsection

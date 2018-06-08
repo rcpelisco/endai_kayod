@@ -17,7 +17,7 @@
         <div class="panel-body tabs">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab1" data-toggle="tab" aria-expanded="true">Interests</a></li>
-                <li class=""><a href="#tab2" data-toggle="tab" aria-expanded="false">Academics</a></li>
+                <li class=""><a href="#tab2" data-toggle="tab" aria-expanded="false" id="tab-2-link">Academics</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade active in" id="tab1">
@@ -26,6 +26,7 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Description</th>
+                                <th>No. of Enrollees</th>
                                 <th>Price</th>
                                 <th>Actions</th>
                             </tr>
@@ -36,9 +37,14 @@
                                     <tr>
                                         <td>{{ $tutorial->title }}</td>
                                         <td>{{ $tutorial->description }}</td>
+                                        <td>{{ count($tutorial->enrolled) }}</td>
                                         <td>{{ $tutorial->price }}</td>
                                         <td>
                                             <a href="tutorials/{{ $tutorial->id }}/enroll" class="btn btn-primary btn-sm">Enroll Student</a>
+                                        </td>
+                                        <td>
+                                            <a href="/tutorials/{{$tutorial->id}}/edit"><button class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></button></a>
+                                            <a href="#"><button class="btn btn-sm btn-danger"><em class="fa fa-trash"></em></button></a>
                                         </td>
                                     </tr>
                                 @endif
@@ -48,11 +54,12 @@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="tab2">
-                    <table class="table" id="academicsTable">
+                    <table class="table" id="academicsTable" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>Title</th>
                                 <th>Description</th>
+                                <th>No. of Enrollees</th>
                                 <th>Price</th>
                                 <th>Actions</th>
                             </tr>
@@ -63,9 +70,16 @@
                                     <tr>
                                         <td>{{ $tutorial->title }}</td>
                                         <td>{{ $tutorial->description }}</td>
+                                        <td>{{ count($tutorial->enrolled) }}</td>
                                         <td>{{ $tutorial->price }}</td>
                                         <td>
                                             <a href="tutorials/{{ $tutorial->id }}/enroll" class="btn btn-primary btn-sm">Enroll Student</a>
+                                        </td>
+                                        <td>
+                                            <a href="#"><button class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></button></a>
+                                            <a href="#"><button class="btn btn-sm btn-danger"><em class="fa fa-trash"></em></button></a>
+                                        </td>
+                                        <td>
                                         </td>
                                     </tr>
                                 @endif
@@ -81,8 +95,26 @@
 @section('scripts')
 <script>
     $(function() {
-        $('#tutorialsTable').DataTable()
-        $('#academicsTable').DataTable()
+        $('a[data-toggle="tab"]').on('shown.bs.tab', () => {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust()
+        })
+        let academics = $('#academicsTable').DataTable({
+            "columns": [
+                null,
+                null,
+                null,
+                { "width": "15%" }
+            ]
+        })
+        let tutorials = $('#tutorialsTable').DataTable({
+            "columns": [
+                null,
+                null,
+                null,
+                { "width": "15%" }
+            ]
+        })
     })
 </script>
 @endsection

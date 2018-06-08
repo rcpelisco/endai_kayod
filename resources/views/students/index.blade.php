@@ -28,11 +28,14 @@
                 <tbody>
                     @foreach($students as $student) 
                     <tr>
-                        <td>{{ $student->first_name }}</td>
+                        <td><a href="/students/{{ $student->id }}">{{ $student->first_name }}</a></td>
                         <td>{{ $student->last_name }}</td>
                         <td>{{ $student->guardian->first_name }} {{ $student->guardian->last_name }}</td>
-                        <td style="background-color:azurex;">Math</td>
-                        <td><a href="/students/{{$student->id}}/edit" class="btn btn-warning btn-sm"><em class="fa fa-trash"></em></a></td>
+                        <td style="background-color:azurex;">
+                            Interest ({{ $student->interest_count }}) -
+                            Academic ({{ $student->academic_count }})
+                        </td>
+                        <td><a href="/students/{{$student->id}}/edit" class="btn btn-sm btn-danger"><em class="fa fa-trash"></em></a></td>
                     </tr>
                     @endforeach
                     
@@ -45,7 +48,15 @@
 @section('scripts')
 <script>
     $(document).ready( function () {
-        $('#datatable').DataTable();
+        $('#datatable').DataTable({
+            "columns": [
+                null,
+                null,
+                null,
+                null,
+                { "width": "10%" }
+            ]
+        });
     });
 </script>
 @endsection

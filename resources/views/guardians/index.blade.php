@@ -32,7 +32,7 @@
                         <td>{{ $guardian->last_name }}</td>
                         <td>{{ $guardian->contact_number }}</td>
                         <td>{{ $guardian->address }}</td>
-                        <td><a href="/guardians/{{$guardian->id}}/edit"><button class="btn sm btn-warning">Edit</button></a></td>
+                        <td><a href="/guardians/{{$guardian->id}}/edit"><button class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></button></a></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -44,7 +44,7 @@
 @section('scripts')
 <script>
     $(document).ready( function () {
-        $('#datatable').DataTable();
+        $('#datatable').DataTable()
     });
 </script>
 @endsection

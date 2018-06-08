@@ -2,7 +2,7 @@
 
 @section('title', 'HomeMadelene')
 
-@section('header', 'Madelene Business Management')
+@section('header', 'THE BILLIONAIRE\'S CONGLOMERATE')
 
 @section('content')
 	<div class="row">

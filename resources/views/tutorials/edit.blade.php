@@ -2,7 +2,7 @@
 
 @section('title', 'Lesson')
 
-@section('header', 'Add Lesson')
+@section('header', 'Edit Lesson Info')
 
 @section('sidebar')
     @include('layouts.tutorial_sidebar')
@@ -14,7 +14,7 @@
         <div>
             @include('layouts.tutorial_alert')
         </div>
-        {!! Form::open(['action' => 'TutorialsController@store', 'method' => 'POST']) !!}
+        {!! Form::open(['action' => ['TutorialsController@update', $tutorials->id], 'method' => 'POST']) !!}
             <div class="col-6">
                 {{Form::label('title', 'Title')}}
                 {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title'])}}

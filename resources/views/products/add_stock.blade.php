@@ -9,7 +9,8 @@
 @endsection
 
 @section('content')
-@include('layouts.message')
+
+@include('layouts.product_alert')
 <div>
     <h2>{{ $product->name }}</h2>
     
@@ -20,7 +21,6 @@
     </div>
     
     {{ Form::hidden('product_id', '$product->id') }}
-    {{ Form::hidden('user_id', '$user->id') }}
     {{ Form::hidden('type', 'add_stock') }}
     {{ Form::hidden('_method', 'PUT') }}
     {{ Form::submit('Submit', ['class' => 'btn btn-primary', 'id' => 'submit_btn'])}}
@@ -31,6 +31,7 @@
 @section('scripts')
 <script>
     $(function() {
+        $('.error_close').click(() => $(this).hide())
         $('#quantity').on('input', function() {
             let total_payment = $('#total_payment')
             let price = total_payment.attr('data-price')

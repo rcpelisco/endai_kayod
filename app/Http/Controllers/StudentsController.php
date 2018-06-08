@@ -16,6 +16,18 @@ class StudentsController extends Controller
     public function index()
     {
         $students = Student::all();
+        foreach($students as $student) {
+            $student->academic_count = 0;
+            $student->interest_count = 0;
+            foreach($student->tutorials as $lesson) {
+                if($lesson->type == 'academic') {
+                    $student->academic_count += 1;
+                    continue;
+                }
+                $student->interest_count += 1;
+            }
+        }
+        // return '<pre>' . json_encode($students, JSON_PRETTY_PRINT) . '</pre>';
         return view('students.index')->with('students', $students);
     }
 
@@ -76,7 +88,16 @@ class StudentsController extends Controller
     public function show($id)
     {
         $student = Student::find($id);
-        return $student;
+        foreach($student->enrolled as $enrolled) {
+            foreach($student->tutorials as $tutorial) {
+                if($enrolled->tutorial_id == $tutorial->id) {
+                    $tutorial->sessions_left = $enrolled->sessions_left;
+                    $tutorial->credit = $enrolled->credit;
+                }
+            }
+        }
+        // return $student->tutorials;
+        return view('students.view')->with('student', $student);
     }
 
     /**

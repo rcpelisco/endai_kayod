@@ -30,9 +30,32 @@ class FlightTicketsController extends Controller
     {
         $airline_companies = AirlineCompany::all();
         
+        $random_str = $this->generate_random();
+ 
         $airline_companies = $airline_companies->pluck('name', 'id');
+        
+        $data = (object) ['random_str' => $random_str, 'airline_companies' => $airline_companies];
 
-        return view('flight_tickets.create')->with('airline_companies', $airline_companies);
+        return view('flight_tickets.create')->with('data', $data);
+    }
+
+    function generate_random($random_str = null) {
+        $old_entry = FlightTicket::where('booking_reference', $random_str)->first();
+        if($old_entry == null && $random_str != null) {
+            return $random_str;
+        }
+        $random = $this->random_str(6);
+        $this->generate_random($random);
+        return $random;
+    }
+
+    function random_str($length, $keyspace = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+        $pieces = [];
+        $max = mb_strlen($keyspace, '8bit') - 1;
+        for ($i = 0; $i < $length; ++$i) {
+            $pieces []= $keyspace[random_int(0, $max)];
+        }
+        return implode('', $pieces);
     }
 
     /**
@@ -94,8 +117,9 @@ class FlightTicketsController extends Controller
     {
         $flight_ticket = FlightTicket::find($id);
         $pdf = PDF::loadView('flight_tickets.view', ['flight_ticket' => $flight_ticket]);
+        // return '<pre>' . json_encode($flight_ticket, JSON_PRETTY_PRINT) . '</pre>';
         return $pdf->stream('flight_ticket.pdf');
-        return view('flight_tickets.view')->with('flight_ticket', $flight_ticket);
+        // return view('flight_tickets.view')->with('flight_ticket', $flight_ticket);
     }
 
     /**

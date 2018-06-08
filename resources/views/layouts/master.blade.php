@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>@yield('title')</title>
-
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-	
+
 	@yield('stylesheets')
 
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -27,7 +25,11 @@
 	</div>	<!--/.main-->
 	
 	<script src="{{ asset('js/app.js') }}"></script>
-	@yield('scripts')
+
+
+
 	
+	@yield('scripts')
+	@yield('scriptu')
 </body>
 </html>

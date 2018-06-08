@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Product;
 use App\ProductLog;
+use App\Buyer;
+use App\BuyersTransactionLog;
 
 class ProductsController extends Controller
 {
@@ -17,7 +19,6 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::all();
-        // return view('products.buy')->with('products', $products);
         return view('products.index')->with('products', $products);
     }
 
@@ -28,6 +29,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
+        
         return view('products.create');
     }
 
@@ -80,8 +82,21 @@ class ProductsController extends Controller
 
     public function buy($id) {
         $product = Product::find($id);
-        return view('products.buy')->with('product', $product);
+        $buyers = Buyer::all()->pluck('name', 'id');
+        $buyers[0] = '(Not registered)';
+        
+        $items = $buyers->all();
+        ksort($items);
+        $buyers = collect($items);
+
+        $data = (object) [
+            'product' => $product,
+            'buyers' => $buyers,
+        ];
+
+        return view('products.buy')->with('data', $data);
     }
+
     public function add_stock($id) {
         $product = Product::find($id);
         return view('products.add_stock')->with('product', $product);
@@ -94,12 +109,20 @@ class ProductsController extends Controller
 
         $product = Product::find($id);
         $product_log = new ProductLog();
+        
+
         $quantity = $request->input('quantity');
+
         if($request->input('type') == 'buy'){
             $product->quantity = $product->quantity - $quantity;
+            $product_log->sold_to = $request->input('sold_to');
+            $this->save_transation_log($id, $product_log, $product, $request);
         }else{
             $product->quantity = $product->quantity + $quantity;
+            $product_log->sold_to = null;
+            
         }
+        $product->total_sold = $product->quantity;
         $product->save();
 
         $product_log->product_id = $id;
@@ -109,7 +132,19 @@ class ProductsController extends Controller
         $product_log->sold_by = Auth::id();
 
         $product_log->save();
+
         return redirect('/products');
+    }
+
+    private function save_transation_log($id, $product_log, $product, $request) {
+        $transaction_log = new BuyersTransactionLog();
+
+        $transaction_log->buyer_id = $product_log->sold_to;
+        $transaction_log->product_id = $id;
+        $transaction_log->transaction_type = 'buy';
+        $transaction_log->value = $request->input('quantity') * $product->price;
+        
+        $transaction_log->save();    
     }
 
     /**

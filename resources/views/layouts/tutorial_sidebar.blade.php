@@ -16,9 +16,23 @@
 		</div>
 	</form>
 	<ul class="nav menu">
-		<li class=""><a href="/tutorials"><em class="fa fa-dashboard">&nbsp;</em> Lessons</a></li>
-		<li class=""><a href="/students"><em class="fa fa-dashboard">&nbsp;</em> Students</a></li>
-		<li class=""><a href="/guardians"><em class="fa fa-dashboard">&nbsp;</em> Guardians</a></li>
+		<li 
+		@if(explode('/', url()->current())[3] == 'tutorials')
+			class="active"
+		@endif
+		><a href="/tutorials"><em class="fa fa-dashboard">&nbsp;</em> Lessons</a></li>	
+
+		@if(explode('/', url()->current())[3] == 'students')
+			<li class="active"><a href="/students"><em class="fa fa-dashboard">&nbsp;</em> Students</a></li>
+		@else
+			<li class=""><a href="/students"><em class="fa fa-dashboard">&nbsp;</em> Students</a></li>
+		@endif
+
+		@if(explode('/', url()->current())[3] == 'guardians')
+			<li class="active"><a href="/guardians"><em class="fa fa-dashboard">&nbsp;</em> Guardians</a></li>
+		@else
+			<li class=""><a href="/guardians"><em class="fa fa-dashboard">&nbsp;</em> Guardians</a></li>
+		@endif
 
 		</li>
 		<li><a href="/"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>

@@ -18,6 +18,7 @@
             <table class="table" id="datatable">
                 <thead>
                     <tr>
+                        <th>Name</th>
                         <th>Booking Ref.</th>
                         <th>Airline PNR</th>
                         <th>Flight Number</th>
@@ -29,6 +30,7 @@
                 <tbody>
                     @foreach($flight_tickets as $flight_ticket) 
                     <tr>
+                            <td>{{ $flight_ticket->passenger_name }}</td>
                         <td><a href="/flight_tickets/{{ $flight_ticket->id }}">
                             {{ $flight_ticket->booking_reference }}</a></td>
                         <td>{{ $flight_ticket->pnr }}</td>
@@ -38,7 +40,7 @@
                         <td>
                             {!! Form::open(['action' => ['FlightTicketsController@destroy', $flight_ticket->id], 'method' => 'POST']) !!}
                                 <a href="/airline_companies/{{ $flight_ticket->id }}/edit" 
-                                    class="btn btn-primary btn-sm">'<em class="fa fa-edit"></em></a>
+                                    class="btn btn-primary btn-sm"><em class="fa fa-edit"></em></a>
                                 {{ Form::hidden('_method', 'DELETE') }}
                                 {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
                             {!! Form::close() !!}

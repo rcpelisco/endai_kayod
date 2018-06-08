@@ -116,7 +116,6 @@ class AirlineCompaniesController extends Controller
 
         $airline_company->save();
 
-
         return redirect('/airline_companies');
     }
 

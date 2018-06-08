@@ -18,9 +18,9 @@
             <table class="table" id="datatable">
                 <thead>
                     <tr>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td></td>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,7 +52,13 @@
 @section('scripts')
 <script>
     $(function() {
-        $('#datatable').DataTable()
+        $('#datatable').DataTable({
+            "columns": [
+                null,
+                null,
+                { "width": "15%" }
+            ]
+        })
     });
 </script>
 @endsection

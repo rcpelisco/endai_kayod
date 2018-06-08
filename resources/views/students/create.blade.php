@@ -39,12 +39,18 @@
                         ], null, ['class' => 'form-control select-form-control'])}}
                     </div>
                 </div>    
-                    <div class="form-group">
-                        {{Form::label('guardian_id' , 'Guardian')}}
-                        {{Form::select('guardian_id', $guardians, null, ['class' => 'form-control select-form-control'])}}
-                    </div>
+                <div class="form-group">
+                    {{Form::label('guardian_id' , 'Guardian')}}
+                    {{Form::select('guardian_id', $guardians, null, ['class' => 'form-control select-form-control'])}}
+                </div>
             {{ Form::submit('Submit' , ['class'=>'btn btn-primary'])}}
             {!! Form::close() !!}
         </div>
     </div>
-@endsection  
+@endsection
+
+@section('scripts')
+<script>
+    $(() => $('.error_close').click(() => $(this).hide()))
+</script>
+@endsection

@@ -32,8 +32,8 @@
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->quantity }}</td>
                         <td>{{ $product->price}}</td>
-                        <td><a href="products/{{ $product->id }}/buy" class="btn btn-success btn-sm" id="buy_btn">Buy Item</a>
-                            <a href="products/{{ $product->id }}/add_stock" class="btn btn-warning btn-sm" id="add_stock_btn">Add Stock</a>
+                        <td><a href="products/{{ $product->id }}/buy" class="btn btn-success btn-sm fa fa-shopping-cart" id="buy_btn"></a>
+                            <a href="products/{{ $product->id }}/add_stock" class="btn btn-warning btn-sm fa fa-plus" id="add_stock_btn"></a>
                         {{-- {!! Form::open(['action' => ['ProductsController@destroy', $product->id], 'method' => 'POST']) !!}
                         {{ Form::hidden('_method', 'DELETE') }}
                         {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
@@ -50,8 +50,18 @@
 
 @section('scripts')
 <script>
-    $(document).ready( function () {
-        $('#datatable').DataTable();
-    });
+    $(() => {
+        $('#datatable').DataTable({
+            'columnDefs': [{
+                'targets': 1,
+                'render': (data, type, row) => {
+                    return data.length > 70 ?
+                        data.substr(0, 70) +'…' :
+                        data;
+                }
+            }]
+        })
+    })
 </script>
+
 @endsection

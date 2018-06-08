@@ -15,9 +15,10 @@
                     <tr>
                         <th>Product name</th>
                         <th>Quantity</th>
-                        <th>sold by</th>
                         <th>Total</th>
                         <th>Transaction</th>
+                        <th>Sold by</th>
+                        <th>Sold to</th>
                         <th>Sold date</th>
                     </tr>
                 </thead>
@@ -26,10 +27,11 @@
                     <tr>
                             <td>{{ $product_log->product->name }}</td>
                             <td>{{ $product_log->quantity }}</td>
-                            <td>{{ $product_log->user->name }}</td>
                             <td>{{ $product_log->total_sold }}</td>
                             <td>{{ $product_log->type }}</td>
-                            <td>{{ $product_log->created_at }}</td>
+                            <td>{{ $product_log->user->name }}</td>
+                            <td>{{ $product_log->buyer->name }}</td>
+                            <td>{{ $product_log->formatted_created_at }}</td>
                     </tr>
                     @endforeach
 
@@ -40,7 +42,10 @@
     @section('scripts')
         <script>
             $(document).ready( function () {
-                $('#datatable').DataTable();
+                $('#datatable').DataTable({
+                    'ordering':false
+                });
+                
             });
         </script>
     @endsection
