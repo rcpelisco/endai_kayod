@@ -2,7 +2,7 @@
 
 {{-- Whoo Kabibo --}}
 
-@section('title', 'Buyers')
+section('title', 'Buyers')
 
 @section('header', 'Buyer')
 
