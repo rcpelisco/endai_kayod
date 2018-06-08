@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+{{-- Whoo Kabibo --}}
+
 @section('title', 'Buyers')
 
 @section('header', 'Buyer')
