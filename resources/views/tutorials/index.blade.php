@@ -4,20 +4,23 @@
 
 @section('header', 'Lessons')
 
-@section('sidebar')
+
     @include('layouts.tutorial_sidebar')
 @endsection
 
 @section('create_button')
-    <a href="tutorials/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Lesson</a>
+    <a href="tutorials/create" class="btn btn-sm btn-success" 
+        style="margin-bottom:15px; margin-left:10px;">Add Lesson</a>
 @endsection
 
 @section('content')
     <div class="panel panel-default">
         <div class="panel-body tabs">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1" data-toggle="tab" aria-expanded="true">Interests</a></li>
-                <li class=""><a href="#tab2" data-toggle="tab" aria-expanded="false" id="tab-2-link">Academics</a></li>
+                <li class="active">
+                    <a href="#tab1" data-toggle="tab" aria-expanded="true">Interests</a></li>
+                <li class="">
+                    <a href="#tab2" data-toggle="tab" aria-expanded="false" id="tab-2-link">Academics</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade active in" id="tab1">
@@ -40,11 +43,21 @@
                                         <td>{{ count($tutorial->enrolled) }}</td>
                                         <td>{{ $tutorial->price }}</td>
                                         <td>
-                                            <a href="tutorials/{{ $tutorial->id }}/enroll" class="btn btn-primary btn-sm">Enroll Student</a>
+                                            <a href="tutorials/{{ $tutorial->id }}/enroll" 
+                                                class="btn btn-primary btn-sm">Enroll Student</a>
                                         </td>
                                         <td>
-                                            <a href="/tutorials/{{$tutorial->id}}/edit"><button class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></button></a>
-                                            <a href="#"><button class="btn btn-sm btn-danger"><em class="fa fa-trash"></em></button></a>
+                                            <a href="/tutorials/{{$tutorial->id}}/edit">
+                                                <button class="btn btn-sm btn-warning">
+                                                    <em class="fa fa-edit"></em>
+                                                </button>
+                                            </a>
+                                            <a href="#">
+                                                <button class="btn btn-sm btn-danger">
+                                                    <em class="fa fa-trash">
+                                                    </em>
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endif

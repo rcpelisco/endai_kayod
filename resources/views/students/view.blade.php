@@ -4,9 +4,7 @@
 
 @section('header', $student->first_name . ' ' . $student->last_name)
 
-@section('sidebar')
-    @include('layouts.tutorial_sidebar')
-@endsection
+@include('layouts.tutorial_sidebar')
 
 @section('stylesheets')
 <style>

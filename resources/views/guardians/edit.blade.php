@@ -4,7 +4,7 @@
 
 @section('header', 'Edit Guardian Info')
 
-@section('sidebar')
+
     @include('layouts.tutorial_sidebar')
 @endsection
 

@@ -3,7 +3,7 @@
 @section('title', 'Airline Company')
 @section('header', $airline_company->name)
 
-@section('sidebar')
+
     @include('layouts.flight_tickets_sidebar')
 @endsection
 

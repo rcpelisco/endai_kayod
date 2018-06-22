@@ -4,9 +4,7 @@
 
 @section('header', 'Products')
 
-@section('sidebar')
-    @include('layouts.product_sidebar')
-@endsection
+@include('layouts.product_sidebar')
 
 @section('create_button')
     <a href="products/create" class="btn btn-sm btn-primary" style="margin-bottom:15px; margin-left:10px;">Add Product</a>

@@ -4,7 +4,7 @@
 
 @section('header', 'Create Airline Company')
 
-@section('sidebar')
+
     @include('layouts.flight_tickets_sidebar')
 @endsection
 

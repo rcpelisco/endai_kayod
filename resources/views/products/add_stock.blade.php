@@ -4,9 +4,7 @@
 
 @section('header', 'Add Stock')
 
-@section('sidebar')
-    @include('layouts.product_sidebar')
-@endsection
+@include('layouts.product_sidebar')
 
 @section('content')
 
@@ -14,7 +12,7 @@
 <div>
     <h2>{{ $product->name }}</h2>
     
-    {!! Form::open(['action' => ['ProductsController@updateQuantity', $product->id], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['ProductsExtraController@update_quantity', $product->id], 'method' => 'POST']) !!}
     <div class="form-group">
         {{Form::label('quantity', 'How Many items to add')}}
         {{Form::text('quantity', '', ['class' => 'form-control', 'id' => 'quantity', 'placeholder' => 'Quantity'])}}

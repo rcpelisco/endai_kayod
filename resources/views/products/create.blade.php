@@ -4,10 +4,8 @@
 
 @section('header', 'Add Product')
 
-@section('sidebar')
-    @include('layouts.product_sidebar')
-@endsection
-
+@include('layouts.product_sidebar')
+    
 @section('content')
 <div class="panel panel-default">
     <div class="panel-body">

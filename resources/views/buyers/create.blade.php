@@ -4,7 +4,7 @@
 
 @section('header', 'Add Buyer')
 
-@section('sidebar')
+
     @include('layouts.product_sidebar')
 @endsection
 

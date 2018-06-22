@@ -4,18 +4,16 @@
 
 @section('header', 'Buy Product')
 
-@section('sidebar')
-    @include('layouts.product_sidebar')
-@endsection
+@include('layouts.product_sidebar')
 
 @section('content')
-@include('layouts.product_alert')
+{{-- @include('layouts.product_alert') --}}
 <div class="panel">
     <div class="panel-body">
 
         <h2>{{ $data->product->name }} <small>({{ $data->product->quantity }} items left )</small></h2>
         
-        {!! Form::open(['action' => ['ProductsController@updateQuantity', $data->product->id], 'method' => 'POST']) !!}
+        {!! Form::open(['action' => ['ProductsExtraController@update_quantity', $data->product->id], 'method' => 'POST']) !!}
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">

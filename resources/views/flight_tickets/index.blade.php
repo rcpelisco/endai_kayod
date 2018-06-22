@@ -4,7 +4,7 @@
 
 @section('header', 'Flight Tickets')
 
-@section('sidebar')
+
     @include('layouts.flight_tickets_sidebar')
 @endsection
 

@@ -4,9 +4,7 @@
 
 @section('header', 'Create Student')
 
-@section('sidebar')
-    @include('layouts.tutorial_sidebar')
-@endsection
+@include('layouts.tutorial_sidebar')
 
 @section('content')
 <div class="panel panel-default">

@@ -13,7 +13,8 @@
 </head>
 <body>
 	@include('layouts.nav')
-	@yield('sidebar')
+	
+	@include('layouts.master_sidebar')
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<div class="col-lg-12">
@@ -26,9 +27,6 @@
 	
 	<script src="{{ asset('js/app.js') }}"></script>
 
-
-
-	
 	@yield('scripts')
 	@yield('scriptu')
 </body>

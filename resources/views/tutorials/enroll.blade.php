@@ -4,9 +4,7 @@
 
 @section('header', $data->tutorial->title)
 
-@section('sidebar')
-    @include('layouts.tutorial_sidebar')
-@endsection
+@include('layouts.tutorial_sidebar')
 
 @section('create_button')
     <a href="students/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Student</a>

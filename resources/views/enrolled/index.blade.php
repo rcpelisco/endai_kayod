@@ -4,7 +4,7 @@
 
 @section('header', 'Enroll student')
 
-@section('sidebar')
+
     @include('layouts.tutorial_sidebar')
 @endsection
 

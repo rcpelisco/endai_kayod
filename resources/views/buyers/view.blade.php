@@ -6,7 +6,7 @@ section('title', 'Buyers')
 
 @section('header', 'Buyer')
 
-@section('sidebar')
+
     @include('layouts.product_sidebar')
 @endsection
 

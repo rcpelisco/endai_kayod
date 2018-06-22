@@ -26,9 +26,9 @@ Route::resource('students','StudentsController');
 
 Route::resource('enrolled','EnrolledController');
 
-Route::get('products/{product}/buy', ['uses' => 'ProductsController@buy', 'as' => 'products.buy']);
-Route::get('products/{product}/add_stock', ['uses' => 'ProductsController@add_stock', 'as' => 'products.add_stock']);
-Route::match('put','products/{product}', ['uses' => 'ProductsController@updateQuantity', 'as' => 'products.updateQuantity']);
+Route::get('products/{product}/buy', ['uses' => 'ProductsExtraController@buy', 'as' => 'products.buy']);
+Route::get('products/{product}/add_stock', ['uses' => 'ProductsExtraController@add_stock', 'as' => 'products.add_stock']);
+Route::match('put', 'products/{product}', ['uses' => 'ProductsExtraController@update_quantity', 'as' => 'products.update_quantity']);
 Route::resource('products','ProductsController');
 
 Route::resources([
