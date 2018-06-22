@@ -119,11 +119,11 @@ class TutorialsController extends Controller
             'price' =>'required',
         ]);
 
-        $guardian = Guardian::find($id);
-        $guardian->title = $request->input('title');
-        $guardian->description = $request->input('description');
-        $guardian->price = $request->input('price');
-        $guardian->save();
+        $tutorials = Tutorial::find($id);
+        $tutorials->title = $request->input('title');
+        $tutorials->description = $request->input('description');
+        $tutorials->price = $request->input('price');
+        $tutorials->save();
 
         return redirect('/tutorials');
     }

@@ -33,8 +33,14 @@
 		@else
 			<li class=""><a href="/guardians"><em class="fa fa-dashboard">&nbsp;</em> Guardians</a></li>
 		@endif
-
+		<li>
+			<a href="{{ route('logout') }}" 
+			onclick="event.preventDefault();
+					document.getElementById('logout_form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout
+			</a>
+			<form id="logout_form" action="{{ route('logout') }}" method="POST">
+				{{ csrf_field() }}		
+			</form>
 		</li>
-		<li><a href="/"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 	</ul>
 </div><!--/.sidebar-->	

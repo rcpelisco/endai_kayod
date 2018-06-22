@@ -32,12 +32,15 @@
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->quantity }}</td>
                         <td>{{ $product->price}}</td>
-                        <td><a href="products/{{ $product->id }}/buy" class="btn btn-success btn-sm fa fa-shopping-cart" id="buy_btn"></a>
-                            <a href="products/{{ $product->id }}/add_stock" class="btn btn-warning btn-sm fa fa-plus" id="add_stock_btn"></a>
-                        {{-- {!! Form::open(['action' => ['ProductsController@destroy', $product->id], 'method' => 'POST']) !!}
-                        {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
-                    {!! Form::close() !!} --}}
+                        <td>
+                            {!! Form::open(['action' => ['ProductsController@destroy', $product->id], 'method' => 'POST']) !!}
+                                <a href="products/{{ $product->id }}/buy" class="btn btn-success btn-sm fa fa-shopping-cart" id="buy_btn"></a>
+                                <a href="products/{{ $product->id }}/add_stock" class="btn btn-primary btn-sm fa fa-plus" id="add_stock_btn"></a>
+                                <a href="products/{{$product->id}}/edit" class="btn btn-sm btn-warning fa fa-edit"></a>
+                                {{ Form::hidden('_method', 'DELETE') }}
+                                {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
+                            {!! Form::close() !!}
+
                         </td>
                     </tr>
                     @endforeach

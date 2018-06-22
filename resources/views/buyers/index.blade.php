@@ -32,8 +32,7 @@
                         <td>{{ $buyer->contact_no }}</td>
                         <td>
                             {!! Form::open(['action' => ['BuyersController@destroy', $buyer->id], 'method' => 'POST']) !!}
-                                {{-- <a href="/buyer/{{ $buyer->id }}/edit" 
-                                    class="btn btn-primary btn-sm"><em class="fa fa-edit"></em></a> --}}
+                                <a href="/buyers/{{ $buyer->id }}/edit" class="btn btn-warning btn-sm"><em class="fa fa-edit"></em></a>
                                 {{ Form::hidden('_method', 'DELETE') }}
                                 {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
                             {!! Form::close() !!}

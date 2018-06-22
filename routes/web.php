@@ -18,23 +18,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('tutorials','TutorialsController');
 Route::get('tutorials/{tutorials}/enroll', ['uses' => 'TutorialsController@enroll', 'as' => 'tutorials.enroll']);
+Route::resource('tutorials','TutorialsController');
 
 Route::resource('guardians','GuardiansController');
 Route::resource('students','StudentsController');
 
 Route::resource('enrolled','EnrolledController');
 
-Route::resource('products','ProductsController');
 Route::get('products/{product}/buy', ['uses' => 'ProductsController@buy', 'as' => 'products.buy']);
 Route::get('products/{product}/add_stock', ['uses' => 'ProductsController@add_stock', 'as' => 'products.add_stock']);
-Route::match(['put', 'patch'],'products/{product}', ['uses' => 'ProductsController@updateQuantity', 'as' => 'products.updateQuantity']);
+Route::match('put','products/{product}', ['uses' => 'ProductsController@updateQuantity', 'as' => 'products.updateQuantity']);
+Route::resource('products','ProductsController');
 
-Route::resource('flight_tickets','FlightTicketsController');
-Route::resource('airline_companies','AirlineCompaniesController');
-Route::resource('product_log','ProductLogController');
-Route::resource('buyers','BuyersController');
+Route::resources([
+    'flight_tickets' => 'FlightTicketsController',
+    'airline_companies' => 'AirlineCompaniesController',
+    'product_log' => 'ProductLogController',
+    'buyers' => 'BuyersController',
+]);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

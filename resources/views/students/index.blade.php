@@ -35,7 +35,9 @@
                             Interest ({{ $student->interest_count }}) -
                             Academic ({{ $student->academic_count }})
                         </td>
-                        <td><a href="/students/{{$student->id}}/edit" class="btn btn-sm btn-danger"><em class="fa fa-trash"></em></a></td>
+                        <td>
+                                <a href="/students/{{$student->id}}/edit"><button class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></button></a>
+                            <a href="/students/{{$student->id}}/edit" class="btn btn-sm btn-danger"><em class="fa fa-trash"></em></a></td>
                     </tr>
                     @endforeach
                     

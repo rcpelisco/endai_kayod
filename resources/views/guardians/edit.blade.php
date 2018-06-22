@@ -9,7 +9,6 @@
 @endsection
 
 @section('content')
-@include('layouts.message')
     {!! Form::open(['action' => ['GuardiansController@update', $guardians->id], 'method' => 'POST']) !!}
         <div class="row">
             <div class="col-xs-6">

@@ -32,6 +32,12 @@
                         <td>{{ $airline_company->address }}</td>
                         <td>{{ $airline_company->phone_number }}</td>
                         <td>{{ $airline_company->email }}</td>
+                        <td>
+                            {!! Form::open(['action' => ['AirlineCompaniesController@destroy', $airline_company->id], 'method' => 'POST']) !!}
+                                {{ Form::hidden('_method', 'DELETE') }}
+                                {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
+                             {!! Form::close() !!}
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

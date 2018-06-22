@@ -18,7 +18,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::all()->where('active', 1); 
         return view('products.index')->with('products', $products);
     }
 
@@ -54,6 +54,7 @@ class ProductsController extends Controller
         $products->quantity = $request->input('quantity');
         $products->price = $request->input('price');
         $products->total_sold = 0;
+        $products->active = 1;
         $products->save();
         return redirect('/products');
     }
@@ -77,7 +78,10 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        return view('products.buy');
+        $product = Product::find($id);
+        
+        return view('products.edit')->with('products', $product);
+        // return view('products.buy');
     }
 
     public function buy($id) {
@@ -109,14 +113,13 @@ class ProductsController extends Controller
 
         $product = Product::find($id);
         $product_log = new ProductLog();
-        
 
         $quantity = $request->input('quantity');
 
         if($request->input('type') == 'buy'){
             $product->quantity = $product->quantity - $quantity;
             $product_log->sold_to = $request->input('sold_to');
-            $this->save_transation_log($id, $product_log, $product, $request);
+            $this->save_transaction_log($id, $product_log, $product, $request);
         }else{
             $product->quantity = $product->quantity + $quantity;
             $product_log->sold_to = null;
@@ -125,6 +128,18 @@ class ProductsController extends Controller
         $product->total_sold = $product->quantity;
         $product->save();
 
+        $this->save_product_log($id, $product_log, $request, $product);
+       
+        return redirect('/products');
+    }
+
+    // private function save_buyers_purchased_product(Request $request) {
+    //     $buyers_purchased_product = new BuyersPurchasedProduct();
+    //     $buyers_purchased_product->value
+    // }
+
+    private function save_product_log($id, ProductLog $product_log, 
+        Request $request, Product $product) {
         $product_log->product_id = $id;
         $product_log->type = $request->input('type');
         $product_log->total_sold = $request->input('quantity') * $product->price;
@@ -132,11 +147,10 @@ class ProductsController extends Controller
         $product_log->sold_by = Auth::id();
 
         $product_log->save();
-
-        return redirect('/products');
     }
 
-    private function save_transation_log($id, $product_log, $product, $request) {
+    private function save_transaction_log($id, ProductLog $product_log, 
+        Product $product, Request $request) {
         $transaction_log = new BuyersTransactionLog();
 
         $transaction_log->buyer_id = $product_log->sold_to;
@@ -156,7 +170,22 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required',
+            'description' => 'required',
+            'quantity' => 'required',
+            'price' => 'required',
+        ]);
+
+        $product = Product::find($id);
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->quantity = $request->input('quantity');
+        $product->price = $request->input('price');
+        $product->save();
+
+        return redirect('/products');
+
     }
 
     /**
@@ -168,7 +197,8 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        $product->delete();
+        $product->active = 0;
+        $product->save();
         return redirect('/products');
     }
 }

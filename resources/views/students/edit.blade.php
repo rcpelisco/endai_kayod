@@ -8,7 +8,6 @@
     @include('layouts.tutorial_sidebar')
 @endsection
 
-@include('layouts.message')
 @section('content')
 <div class="panel panel-default">
     <div class="panel-body">

@@ -27,7 +27,14 @@
 			class="active"
 		@endif
 		><a href="/airline_companies"><em class="fa fa-cart-plus">&nbsp;</em> Airline Companies</a></li>
-
-		<li><a href="/"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+		<li>
+			<a href="{{ route('logout') }}" 
+			onclick="event.preventDefault();
+					document.getElementById('logout_form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout
+			</a>
+			<form id="logout_form" action="{{ route('logout') }}" method="POST">
+				{{ csrf_field() }}		
+			</form>
+		</li>
 	</ul>
 </div><!--/.sidebar-->	

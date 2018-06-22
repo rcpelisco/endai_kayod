@@ -98,6 +98,7 @@ class AirlineCompaniesController extends Controller
             'address' => 'required',
             'phone_number' => 'required',
             'pnr' => 'required',
+            'logo_path' => 'required',
         ]);
 
         

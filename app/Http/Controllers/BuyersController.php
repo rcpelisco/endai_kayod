@@ -60,11 +60,13 @@ class BuyersController extends Controller
     {
         $buyer = Buyer::find($id);
         $buyer->products_bought = collect();
+        $buyer->unpaid_products = collect();
         foreach($buyer->transaction_log as $entry) {
             $buyer->products_bought = $buyer->products_bought
                 ->push(Product::select('id', 'name', 'price')
                 ->find($entry->product_id))->unique();
         }
+
         foreach($buyer->products_bought as $product) {
 
             $total_bought = ProductLog::select('quantity')->where([
@@ -81,7 +83,7 @@ class BuyersController extends Controller
             $product->total_bought = $quantity;
         }
 
-        // return '<pre>' . json_encode($buyer, JSON_PRETTY_PRINT) . '</pre>';
+        return '<pre>' . json_encode($buyer, JSON_PRETTY_PRINT) . '</pre>';
         return view('buyers.view')->with('buyer', $buyer);
     }
 
@@ -93,7 +95,8 @@ class BuyersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $buyers = Buyer::find($id);
+        return view('buyers.edit')->with('buyers', $buyers);
     }
 
     /**
@@ -105,7 +108,19 @@ class BuyersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' =>'required',
+            'address' =>'required',
+            'contact_number' =>'required',
+        ]);
+
+        $buyers = Buyer::find($id);
+        $buyers->first_name = $request->input('name');
+        $buyers->contact_number = $request->input('contact_number');
+        $buyers->address = $request->input('address');
+        $buyers->save();
+
+        return redirect('/guardians');
     }
 
     /**
