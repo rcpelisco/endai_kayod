@@ -16,9 +16,9 @@
                         <th>Quantity</th>
                         <th>Total</th>
                         <th>Transaction</th>
-                        <th>Sold by</th>
+                        <th>Liable</th>
                         <th>Sold to</th>
-                        <th>Sold date</th>
+                        <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,13 +27,19 @@
                             <td>{{ $product_log->product->name }}</td>
                             <td>{{ $product_log->quantity }}</td>
                             <td>{{ $product_log->total_sold }}</td>
-                            <td>{{ $product_log->type }}</td>
+                            <td>
+                                @php
+                                echo $product_log->type == 'edit' ? 
+                                    '<a href="products/' . $product_log->product->id 
+                                        . '/edit_history">' . $product_log->type 
+                                        . '</a>' : $product_log->type;
+                                @endphp
+                            </td>
                             <td>{{ $product_log->user->name }}</td>
                             <td>{{ $product_log->buyer->name }}</td>
                             <td>{{ $product_log->formatted_created_at }}</td>
                     </tr>
                     @endforeach
-
                 </tbody>
             </table>
         </div>

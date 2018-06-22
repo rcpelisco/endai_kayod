@@ -4,9 +4,7 @@
 
 @section('header', 'Edit Guardian Info')
 
-
-    @include('layouts.tutorial_sidebar')
-@endsection
+@include('layouts.tutorial_sidebar')
 
 @section('content')
     {!! Form::open(['action' => ['GuardiansController@update', $guardians->id], 'method' => 'POST']) !!}

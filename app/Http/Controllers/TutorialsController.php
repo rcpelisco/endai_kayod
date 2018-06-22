@@ -74,24 +74,6 @@ class TutorialsController extends Controller
         return view('tutorials.view')->with('tutorial', $tutorial);
     }
 
-    public function enroll($id) {
-        $tutorial = Tutorial::find($id);
-        $students = Student::all();
-
-        foreach($students as $student) {
-            $student->enrolled = false;
-            foreach($tutorial->students as $enrolled) {
-                if($enrolled->id == $student->id) {
-                    $student->enrolled = true;
-                }
-            }
-        }
-
-        $data = (object) ['tutorial' => $tutorial, 'students' => $students];
-        
-        return view('tutorials.enroll')->with('data', $data);
-    }
-
     /**
      * Show the form for editing the specified resource.
      *

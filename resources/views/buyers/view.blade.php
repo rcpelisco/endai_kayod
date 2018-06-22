@@ -6,9 +6,7 @@ section('title', 'Buyers')
 
 @section('header', 'Buyer')
 
-
-    @include('layouts.product_sidebar')
-@endsection
+@include('layouts.product_sidebar')
 
 @section('content')
 <div class="panel panel-default">

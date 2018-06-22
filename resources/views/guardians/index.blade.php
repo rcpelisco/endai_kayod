@@ -4,10 +4,8 @@
 
 @section('header', 'Guardians')
 
-
-    @include('layouts.tutorial_sidebar')
-@endsection
-
+@include('layouts.tutorial_sidebar')
+    
 @section('create_button')
     <a href="guardians/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Guardian</a>
 @endsection

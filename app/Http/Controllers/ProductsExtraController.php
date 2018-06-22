@@ -34,31 +34,29 @@ class ProductsExtraController extends Controller
     }
 
     public function update_quantity(Request $request, $id) {
-        return $id;
-        // $this->validate($request,[
-        //     'quantity' =>'required',
-        // ]);
+        $this->validate($request,[
+            'quantity' =>'required',
+        ]);
 
-        // $product = Product::find($id);
-        // $product_log = new ProductLog();
+        $product = Product::find($id);
+        $product_log = new ProductLog();
 
-        // $quantity = $request->input('quantity');
+        $quantity = $request->input('quantity');
 
-        // if($request->input('type') == 'buy'){
-        //     $product->quantity = $product->quantity - $quantity;
-        //     $product_log->sold_to = $request->input('sold_to');
-        //     $this->save_transaction_log($id, $product_log, $product, $request);
-        // }else{
-        //     $product->quantity = $product->quantity + $quantity;
-        //     $product_log->sold_to = null;
-            
-        // }
-        // $product->total_sold = $product->quantity;
-        // $product->save();
+        if($request->input('type') == 'buy'){
+            $product->quantity = $product->quantity - $quantity;
+            $product_log->sold_to = $request->input('sold_to') == 0 ? null : $request->input('sold_to');
+            $this->save_transaction_log($id, $product_log, $product, $request);
+        }else{
+            $product->quantity = $product->quantity + $quantity;
+            $product_log->sold_to = null;
+        }
+        $product->total_sold = $product->quantity;
+        $product->save();
 
-        // $this->save_product_log($id, $product_log, $request, $product);
+        $this->save_product_log($id, $product_log, $request, $product);
        
-        // return redirect('/products');
+        return redirect('/products');
     }
 
     // private function save_buyers_purchased_product(Request $request) {

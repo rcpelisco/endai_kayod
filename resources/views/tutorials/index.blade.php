@@ -4,9 +4,7 @@
 
 @section('header', 'Lessons')
 
-
-    @include('layouts.tutorial_sidebar')
-@endsection
+@include('layouts.tutorial_sidebar')
 
 @section('create_button')
     <a href="tutorials/create" class="btn btn-sm btn-success" 

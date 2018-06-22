@@ -7,7 +7,7 @@
 @include('layouts.product_sidebar')
 
 @section('content')
-{{-- @include('layouts.product_alert') --}}
+@include('layouts.product_alert')
 <div class="panel">
     <div class="panel-body">
 

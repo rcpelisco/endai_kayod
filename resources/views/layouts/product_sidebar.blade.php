@@ -6,7 +6,7 @@
 <li class="{{ Request::is('buyers') || Request::is('buyers/*') ? 'active' : ''}}">
 	<a href="/buyers"><em class="fa fa-users">&nbsp;</em> Buyers</a></li>
 		
-<li class="{{ Request::is('log') || Request::is('log/*') ? 'active' : ''}}">
+<li class="{{ Request::is('product_log') || Request::is('product_log/*') ? 'active' : ''}}">
 	<a href="/product_log"><em class="fa fa-id-card">&nbsp;</em>Logs</a></li>
 			
 @endsection()

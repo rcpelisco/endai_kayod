@@ -8,6 +8,7 @@ use App\Product;
 use App\ProductLog;
 use App\Buyer;
 use App\BuyersTransactionLog;
+use App\ProductEditHistory;
 
 class ProductsController extends Controller
 {
@@ -48,14 +49,17 @@ class ProductsController extends Controller
             'price' => 'required'
         ]);
 
-        $products = new Product();
-        $products->name = $request->input('name');
-        $products->description = $request->input('description');
-        $products->quantity = $request->input('quantity');
-        $products->price = $request->input('price');
-        $products->total_sold = 0;
-        $products->active = 1;
-        $products->save();
+        $product = new Product();
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->quantity = $request->input('quantity');
+        $product->price = $request->input('price');
+        $product->total_sold = 0;
+        $product->active = 1;
+        $product->save();
+
+        $this->store_edit_history($product->id, $product);
+
         return redirect('/products');
     }
 
@@ -100,6 +104,10 @@ class ProductsController extends Controller
         ]);
 
         $product = Product::find($id);
+        
+        $product_log_id = $this->store_in_product_logs($id, 'edit');
+        $this->store_edit_history($id, null, $request);
+
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->quantity = $request->input('quantity');
@@ -107,7 +115,47 @@ class ProductsController extends Controller
         $product->save();
 
         return redirect('/products');
+    }
 
+    /**
+     * Save the specified resource's log in storage.
+     *
+     * @param  int  $id
+     * @param  string  $type
+     * @return int id of the last inserted log
+     */
+    private function store_in_product_logs($id, $type) {
+        $product_log = new ProductLog();
+
+        $product_log->product_id = $id;
+        $product_log->type = $type;
+        $product_log->total_sold = null;
+        $product_log->quantity = null;
+        $product_log->sold_by = Auth::id();
+
+        $product_log->save();
+    }
+
+    /**
+     * Save the specified resource's edit history in storage.
+     *
+     * @param  int  $id
+     * @param  App\Product  $p
+     * @param  \Illuminate\Http\Request  $request
+     * @return null
+     */
+    private function store_edit_history($id, Product $p = null, Request $request = null) 
+    {
+        $product_edit_history = new ProductEditHistory();
+
+        $product_edit_history->product_name = $request ? $request->input('name') : $p->name; 
+        $product_edit_history->description = $request ? $request->input('description') : $p->description; 
+        $product_edit_history->quantity = $request ? $request->input('quantity') : $p->quantity; 
+        $product_edit_history->price = $request ? $request->input('price') : $p->price; 
+        $product_edit_history->product_id = $id;
+        $product_edit_history->edited_by = Auth::id();
+
+        $product_edit_history->save();
     }
 
     /**
@@ -121,6 +169,8 @@ class ProductsController extends Controller
         $product = Product::find($id);
         $product->active = 0;
         $product->save();
+
+        $this->store_in_product_logs($id, 'delete');
         return redirect('/products');
     }
 }

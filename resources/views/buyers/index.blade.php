@@ -4,9 +4,7 @@
 
 @section('header', 'Buyers')
 
-
-    @include('layouts.product_sidebar')
-@endsection
+@include('layouts.product_sidebar')
 
 @section('create_button')
     <a href="buyers/create" class="btn btn-sm btn-primary" style="margin-bottom:15px; margin-left:10px;">Add Buyer</a>
