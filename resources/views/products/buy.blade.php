@@ -28,18 +28,18 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="row">
+        <div class="row">
             <div class="col-md-4 col-sm-12">
                 {{Form::label('payment_method', 'Payment Method')}}
                 <br>
-                <label for="installment" class="radio-inline">
-                    {{ Form::radio('payment_method', 'installment', true, ['id' => 'installment']) }} Installment
-                </label>
                 <label for="full" class="radio-inline">
-                    {{ Form::radio('payment_method', 'full', false, ['id' => 'full']) }} Full
+                    {{ Form::radio('payment_method', 'cash', true, ['id' => 'cash']) }} Cash
+                </label>
+                <label for="installment" class="radio-inline">
+                    {{ Form::radio('payment_method', 'debt', false, ['id' => 'debt']) }} Debt
                 </label>
             </div>
-        </div> --}}
+        </div>
         <h3><small>Price: <strong>{{ $data->product->price }}</strong></small></h3>
         <h3><small>Total: <strong data-quantity="{{ $data->product->quantity}}" 
             data-price="{{ $data->product->price }}" id="total_payment">0</strong></small></h3>
@@ -74,11 +74,16 @@
             sideBySide: true,
         });
         $('input[name="payment_method"]').change(() => {
+
             $('#payment-date').show()
             if($('#full').is(':checked')) {
                 $('#payment-date').hide()
             }
         })
+
+        function checkPaymentMethod() {
+            
+        }
     })
 </script>
 @endsection

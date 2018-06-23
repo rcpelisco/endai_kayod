@@ -4,9 +4,7 @@
 
 @section('header', 'Flight Tickets')
 
-
-    @include('layouts.flight_tickets_sidebar')
-@endsection
+@include('layouts.flight_tickets_sidebar')
 
 @section('create_button')
     <a href="flight_tickets/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Ticket</a>

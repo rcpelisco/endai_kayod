@@ -8,6 +8,7 @@ use App\Product;
 use App\ProductLog;
 use App\Buyer;
 use App\BuyersTransactionLog;
+use App\BuyersPurchasedProduct;
 
 class ProductsExtraController extends Controller
 {
@@ -43,11 +44,12 @@ class ProductsExtraController extends Controller
 
         $quantity = $request->input('quantity');
 
-        if($request->input('type') == 'buy'){
+        if($request->input('type') == 'buy') {
             $product->quantity = $product->quantity - $quantity;
             $product_log->sold_to = $request->input('sold_to') == 0 ? null : $request->input('sold_to');
-            $this->save_transaction_log($id, $product_log, $product, $request);
-        }else{
+            $this->save_transaction_log($product_log, $product, $request);
+            $this->save_buyers_purchased_product($request, $product); 
+        } else {
             $product->quantity = $product->quantity + $quantity;
             $product_log->sold_to = null;
         }
@@ -59,10 +61,15 @@ class ProductsExtraController extends Controller
         return redirect('/products');
     }
 
-    // private function save_buyers_purchased_product(Request $request) {
-    //     $buyers_purchased_product = new BuyersPurchasedProduct();
-    //     $buyers_purchased_product->value
-    // }
+    private function save_buyers_purchased_product(Request $request, Product $product) {
+        $buyers_purchased_product = new BuyersPurchasedProduct();
+        $buyers_purchased_product->buyer_id = $request->input('sold_to');
+        $buyers_purchased_product->product_id = $product->id;
+        $buyers_purchased_product->value = $request->input('quantity') * $product->price;
+        $buyers_purchased_product->paid = 0;
+
+        $buyers_purchased_product->save();
+    }
 
     private function save_product_log($id, ProductLog $product_log, 
         Request $request, Product $product) {
@@ -75,12 +82,12 @@ class ProductsExtraController extends Controller
         $product_log->save();
     }
 
-    private function save_transaction_log($id, ProductLog $product_log, 
+    private function save_transaction_log(ProductLog $product_log, 
         Product $product, Request $request) {
         $transaction_log = new BuyersTransactionLog();
 
         $transaction_log->buyer_id = $product_log->sold_to;
-        $transaction_log->product_id = $id;
+        $transaction_log->product_id = $product->id;
         $transaction_log->transaction_type = 'buy';
         $transaction_log->value = $request->input('quantity') * $product->price;
         

@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th>Product name</th>
+                        <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
                         <th>Transaction</th>
@@ -25,11 +26,13 @@
                     @foreach($product_logs as $product_log)
                     <tr>
                             <td>{{ $product_log->product->name }}</td>
+                            <td>{{ $product_log->product->price }}</td>
                             <td>{{ $product_log->quantity }}</td>
                             <td>{{ $product_log->total_sold }}</td>
                             <td>
                                 @php
-                                echo $product_log->type == 'edit' ? 
+                                echo $product_log->type == 'edit' || 
+                                    $product_log->type == 'delete' ? 
                                     '<a href="products/' . $product_log->product->id 
                                         . '/edit_history">' . $product_log->type 
                                         . '</a>' : $product_log->type;

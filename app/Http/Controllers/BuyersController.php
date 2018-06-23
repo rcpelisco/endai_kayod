@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Buyer;
 use App\Product;
 use App\ProductLog;
+use App\BuyersPurchasedProduct;
 
 class BuyersController extends Controller
 {
@@ -60,7 +61,7 @@ class BuyersController extends Controller
     {
         $buyer = Buyer::find($id);
         $buyer->products_bought = collect();
-        $buyer->unpaid_products = collect();
+        $buyer->unpaid_products = BuyersPurchasedProduct::where('paid', 0)->get();
         foreach($buyer->transaction_log as $entry) {
             $buyer->products_bought = $buyer->products_bought
                 ->push(Product::select('id', 'name', 'price')

@@ -1,11 +1,10 @@
 @extends('layouts.master')
 
 @section('title', 'Airline Companies')
+
 @section('header', 'Airline Companies')
 
-
-    @include('layouts.flight_tickets_sidebar')
-@endsection
+@include('layouts.flight_tickets_sidebar')
 
 @section('create_button')
     <a href="airline_companies/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Airline Company</a>

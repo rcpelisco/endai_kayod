@@ -4,9 +4,8 @@
 
 @section('header', 'Create Airline Company')
 
-
-    @include('layouts.flight_tickets_sidebar')
-@endsection
+@include('layouts.flight_tickets_sidebar')
+    
 
 @section('content')
     <div class="panel">
