@@ -19,25 +19,32 @@ section('title', 'Buyers')
                 @foreach($buyer->products_bought as $product)
                 <div class="row border-bottom">
                     <div class="col-xs-3">{{ $product->name }}</div>
-                    <div class="col-xs-3">{{ $product->total_bought }} <small>pcs</small></div>
+                    <div class="col-xs-3">{{ $product->quantity }} <small>pcs</small></div>
                     <div class="col-xs-3"><small>Php</small> {{ $product->price }} </div>
-                    <div class="col-xs-3"><small>Total</small> {{ $product->total_bought * $product->price }}</div>
+                    <div class="col-xs-3"><small>Total</small> {{ $product->quantity * $product->price }}</div>
                 </div>
                 @endforeach
             </div>
             <div class="col-md-6">
                 <div>
-                    <h4>Unpaid Products <small><button class="btn btn-sm btn-warning" style="">Pay this</button></small></h4>
+                    <h4>Unpaid Products 
+                        {{-- <small><button class="btn btn-sm btn-warning" style="">Pay this</button></small> --}}
+                    </h4>
                 </div>
-                <div class="col-xs-4">Shingshangfu</div>
-                <div class="col-xs-4">5pcs</div>
-                <div class="col-xs-4">2000php</div>
-                <hr>
+                @foreach($buyer->unpaid_products as $product)
+                <div class="row border-bottom">
+                    <div class="col-xs-4">{{ $product->name }}</div>
+                    <div class="col-xs-2">{{ $product->quantity }} <small>pcs</small></div>
+                    <div class="col-xs-3"><small>Total</small> {{ $product->quantity * $product->price }}</div>
+                <div class="col-xs-3"><a href="pay_debt/{{ $product->id }}" class="btn btn-xs btn-primary">Pay</a></div>
+                </div>
+                @endforeach
+                {{-- <hr> --}}
                 <div class="col-xs-8">
-                    <h4>total</h4>
+                    <h4>Total</h4>
                 </div>
                 <div class="col-xs-4">
-                    <h4>12000</h4>
+                    <h4>{{$buyer->unpaid_products->sum('value')}}</h4>
                 </div>
             </div>
         </div>

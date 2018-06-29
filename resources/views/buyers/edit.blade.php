@@ -29,10 +29,11 @@
 
             <div class="col-6">
                 <div class="form-group">
-                    {{Form::label('contact_no' , 'Contact no')}}
-                    {{Form::text('contact_no' , $buyers->contact_no, ['class' => 'form-control' , 'placeholder' => 'Contact no'])}}
+                    {{Form::label('contact_number' , 'Contact number')}}
+                    {{Form::text('contact_number' , $buyers->contact_no, ['class' => 'form-control' , 'placeholder' => 'Contact no'])}}
                 </div>
             </div>
+            {{Form::hidden('_method', 'PUT')}}
             {{ Form::submit('Submit' , ['class'=>'btn btn-primary'])}}
         {!! Form::close() !!}
     </div>

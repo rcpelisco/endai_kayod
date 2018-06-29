@@ -14,7 +14,7 @@ class GuardiansController extends Controller
      */
     public function index()
     {
-        $guardians = Guardian::all();
+        $guardians = Guardian::where('active', 1)->get();
         return view('guardians.index')->with('guardians', $guardians);
     }
 
@@ -48,7 +48,7 @@ class GuardiansController extends Controller
         $guardians->last_name = $request->input('last_name');
         $guardians->contact_number = $request->input('contact_number');
         $guardians->address = $request->input('address');
-        
+        $guardians->active = 1;
         $guardians->save();
 
         return redirect('/guardians');
@@ -112,6 +112,10 @@ class GuardiansController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $guardian = Guardian::find($id);
+        $guardian->active = 0;
+        $guardian->save();
+
+        return redirect('/guardians');
     }
 }

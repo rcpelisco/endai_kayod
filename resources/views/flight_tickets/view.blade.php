@@ -17,7 +17,7 @@
                 margin-bottom: 0px;
             }
             .logo {
-                width: 250px;
+                height: 50px;
             }
             .title {
                 margin: 5px 0px 5px 0px;
@@ -45,7 +45,7 @@
         <h3 class="headline">FLIGHT ITENERARY TICKET</h3>
         <table>
             <tr>
-                <td><img style="width: 180px" src="{{ $flight_ticket->airline_company->logo_path }}" alt=""></td>
+                <td><img style="height: 25px" src="{{ $flight_ticket->airline_company->logo_path }}" alt=""></td>
                 <td></td>
             </tr>
             <tr>

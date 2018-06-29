@@ -35,11 +35,11 @@
                     'academic' => 'Academic',
                 ], null, ['class' => 'form-control'])}}
             </div>
-
+{{-- 
             <div class="form-group" id="sessions_group">
                 {{Form::label('sessions_left', 'Sessions:')}}
                 {{Form::text('sessions_left',  '', ['class' => 'form-control', 'placeholder' => 'Sessions'])}}
-            </div>
+            </div> --}}
     
             {{ Form::submit('Submit', ['class'=>'btn btn-primary'])}}
         {!! Form::close() !!}

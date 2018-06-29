@@ -27,8 +27,14 @@
                         <td>{{ $student->first_name }}</td>
                         <td>{{ $student->last_name }}</td>
                         @if($student->enrolled)
-                        <td><button class="btn btn-primary btn-sm" disabled>Enrolled</button>
-                            <button class="btn btn-danger btn-sm">Drop</button></td>
+                        <td>
+                                {!! Form::open(['action' => 'TutorialsExtraController@drop' , 'method' => 'POST']) !!}
+                                <button class="btn btn-primary btn-sm" disabled>Enrolled</button>
+                                {{ Form::hidden('student_id', $student->id) }}
+                                {{ Form::hidden('tutorial_id', $data->tutorial->id) }}
+                                {{ Form::submit('Drop', ['class' => 'btn btn-danger btn-sm']) }}
+                                {!! Form::close() !!}
+                        </td>
                         @else
                         <td>
                             {!! Form::open(['action' => 'EnrolledController@store' , 'method' => 'POST']) !!}

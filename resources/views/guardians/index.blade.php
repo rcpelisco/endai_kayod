@@ -30,7 +30,13 @@
                         <td>{{ $guardian->last_name }}</td>
                         <td>{{ $guardian->contact_number }}</td>
                         <td>{{ $guardian->address }}</td>
-                        <td><a href="/guardians/{{$guardian->id}}/edit"><button class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></button></a></td>
+                        <td>
+                            {!! Form::open(['action' => ['GuardiansController@destroy', $guardian->id], 'method' => 'POST']) !!}
+                                <a href="/guardians/{{$guardian->id}}/edit" class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></button></a>
+                                {{ Form::hidden('_method', 'DELETE') }}
+                                {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
+                            {!! Form::close() !!}
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

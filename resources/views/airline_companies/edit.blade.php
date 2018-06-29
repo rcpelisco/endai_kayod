@@ -41,10 +41,6 @@
                 {{ Form::label('email', 'E-mail') }}
                 {{ Form::text('email', $airline_company->email, ['class' => 'form-control', 'placeholder' => 'E-mail']) }}
             </div>
-            <div class="col-xs-4">
-                {{ Form::label('pnr', 'PNR') }}
-                {{ Form::text('pnr', $airline_company->pnr, ['class' => 'form-control', 'placeholder' => 'PNR']) }}
-            </div>
         </div>
 
         <div class="row">

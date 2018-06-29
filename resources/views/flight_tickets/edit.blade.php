@@ -10,8 +10,8 @@
     <div class="panel">
         <div class="panel-body">
             @include('layouts.flight_ticket_alert')
-            {{-- {!! Form::model($data['flight_ticket'], ['route' => ['flight_tickets.update', $data['flight_ticket']->id]]) !!} --}}
-            {!! Form::open(['action' => ['FlightTicketsController@store', $data['flight_ticket']->id], 'method' => 'POST']) !!}
+            {{-- {!! Form::open(['action' => ['FlightTicketsController@store', $data['flight_ticket']->id], 'method' => 'POST']) !!} --}}
+            {!! Form::model($data['flight_ticket'], ['route' => ['flight_tickets.update', $data['flight_ticket']->id]]) !!}
                 <h3>Flight Itinerary Ticket</h3>
                 <div class="row">
                     <div class="col-xs-4">
@@ -95,6 +95,7 @@
                     </div>
                 </div>
                 <br>
+                {{Form::hidden('_method', 'PUT')}}
                 {{ Form::submit('Submit', ['class'=>'btn btn-primary'])}}
             {!! Form::close() !!}
          

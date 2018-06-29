@@ -25,14 +25,25 @@
                 </thead>
                 <tbody>
                     @foreach($products as $product) 
-                    <tr>
+                        @php
+                            if($product->quantity <= 50 && $product->quantity > 10) {
+                                echo '<tr class="warning">';
+                            } else if($product->quantity <= 10 && $product->quantity > 0) {
+                                echo '<tr class="danger">';
+                            } else if($product->quantity == 0) {
+                                echo '<tr class="active">';
+                            } else {
+                                echo '<tr>';
+                            }
+                        @endphp
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->quantity }}</td>
-                        <td>{{ $product->price}}</td>
+                        <td>{{ $product->price }}</td>
                         <td>
                             {!! Form::open(['action' => ['ProductsController@destroy', $product->id], 'method' => 'POST']) !!}
-                                <a href="products/{{ $product->id }}/buy" class="btn btn-success btn-sm fa fa-shopping-cart" id="buy_btn"></a>
+
+                                <a href="products/{{ $product->id }}/buy" class="btn btn-success btn-sm fa fa-shopping-cart {{ $product->quantity == 0 ? 'disabled' : '' }}" id="buy_btn"></a>
                                 <a href="products/{{ $product->id }}/add_stock" class="btn btn-primary btn-sm fa fa-plus" id="add_stock_btn"></a>
                                 <a href="products/{{$product->id}}/edit" class="btn btn-sm btn-warning fa fa-edit"></a>
                                 {{ Form::hidden('_method', 'DELETE') }}

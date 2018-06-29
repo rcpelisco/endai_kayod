@@ -15,7 +15,7 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
+        $students = Student::where('active', 1)->get();
         foreach($students as $student) {
             $student->academic_count = 0;
             $student->interest_count = 0;
@@ -38,8 +38,7 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        $guardians = Guardian::all('id', 'first_name', 'last_name');
-
+        $guardians = Guardian::all('id', 'first_name', 'last_name', 'active')->where('active', 1);
         $guardians = $guardians->map(function($item, $key) {
             return [
                 'id' => $item['id'],
@@ -73,6 +72,7 @@ class StudentsController extends Controller
         $student->date_of_birth = $request->input('date_of_birth');
         $student->gender = $request->input('gender');
         $student->guardian_id = $request->input('guardian_id');
+        $student->active = 1;
 
         $student->save();
 
@@ -93,10 +93,13 @@ class StudentsController extends Controller
                 if($enrolled->tutorial_id == $tutorial->id) {
                     $tutorial->sessions_left = $enrolled->sessions_left;
                     $tutorial->credit = $enrolled->credit;
+                    $tutorial->paid = $enrolled->active;
+                    $tutorial->enrolled_id = $enrolled->id;
                 }
             }
         }
         // return $student->tutorials;
+        // return '<pre>' . json_encode($student, JSON_PRETTY_PRINT) . '</pre>';
         return view('students.view')->with('student', $student);
     }
 
@@ -110,7 +113,7 @@ class StudentsController extends Controller
     {
         $student = Student::find($id);
         
-        $guardians = Guardian::all('id', 'first_name', 'last_name');
+        $guardians = Guardian::where('active', 1)->get(['id', 'first_name', 'last_name']);
 
         $guardians = $guardians->map(function($item, $key) {
             return [
@@ -120,7 +123,6 @@ class StudentsController extends Controller
         });
         
         $guardians = $guardians->pluck('name', 'id');
-
         return view('students.edit')->with('data', ['student' => $student, 'guardians' => $guardians]);
     }
 
@@ -145,7 +147,6 @@ class StudentsController extends Controller
         $student->last_name = $request->input('last_name');
         $student->date_of_birth = $request->input('date_of_birth');
         $student->gender = $request->input('gender');
-        $student->guardian_id = $request->input('guardian_id');
 
         $student->save();
 
@@ -160,6 +161,10 @@ class StudentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Student::find($id);
+        $student->active = 0;
+        $student->save();
+
+        return redirect('/students');
     }
 }

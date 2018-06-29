@@ -15,7 +15,7 @@ class TutorialsController extends Controller
      */
     public function index()
     {
-        $tutorials = Tutorial::all();
+        $tutorials = Tutorial::where('active', 1)->get();
         
         // return '<pre>' . json_encode($tutorials, JSON_PRETTY_PRINT) . '</pre>';
         return view('tutorials.index')->with('tutorials', $tutorials);
@@ -51,6 +51,7 @@ class TutorialsController extends Controller
         $tutorial->description = $request->input('description');
         $tutorial->price = $request->input('price');
         $tutorial->type = $request->input('type');
+        $tutorial->active = 1;
 
         $tutorial->save();
 
@@ -118,6 +119,10 @@ class TutorialsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tutorial = Tutorial::find($id);
+        $tutorial->active = 0;
+        $tutorial->save();
+
+        return redirect('/tutorials');
     }
 }

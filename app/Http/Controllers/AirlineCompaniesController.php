@@ -97,8 +97,6 @@ class AirlineCompaniesController extends Controller
             'name' => 'required',
             'address' => 'required',
             'phone_number' => 'required',
-            'pnr' => 'required',
-            'logo_path' => 'required',
         ]);
 
         
@@ -107,7 +105,6 @@ class AirlineCompaniesController extends Controller
         $airline_company->address = $request->input('address');
         $airline_company->phone_number = $request->input('phone_number');
         $airline_company->email = $request->input('email');
-        $airline_company->pnr = $request->input('pnr');
 
         if($request->hasFile('logo_path')) {
             $path = $request->file('logo_path')->store('images');

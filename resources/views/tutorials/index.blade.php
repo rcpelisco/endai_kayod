@@ -45,17 +45,11 @@
                                                 class="btn btn-primary btn-sm">Enroll Student</a>
                                         </td>
                                         <td>
-                                            <a href="/tutorials/{{$tutorial->id}}/edit">
-                                                <button class="btn btn-sm btn-warning">
-                                                    <em class="fa fa-edit"></em>
-                                                </button>
-                                            </a>
-                                            <a href="#">
-                                                <button class="btn btn-sm btn-danger">
-                                                    <em class="fa fa-trash">
-                                                    </em>
-                                                </button>
-                                            </a>
+                                            {!! Form::open(['action' => ['TutorialsController@destroy', $tutorial->id], 'method' => 'POST']) !!}
+                                                <a href="/tutorials/{{$tutorial->id}}/edit" class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></a>
+                                                {{ Form::hidden('_method', 'DELETE') }}
+                                                {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
+                                            {!! Form::close() !!}
                                         </td>
                                     </tr>
                                 @endif
@@ -87,8 +81,11 @@
                                             <a href="tutorials/{{ $tutorial->id }}/enroll" class="btn btn-primary btn-sm">Enroll Student</a>
                                         </td>
                                         <td>
-                                            <a href="#"><button class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></button></a>
-                                            <a href="#"><button class="btn btn-sm btn-danger"><em class="fa fa-trash"></em></button></a>
+                                            {!! Form::open(['action' => ['TutorialsController@destroy', $tutorial->id], 'method' => 'POST']) !!}
+                                                <a href="/tutorials/{{$tutorial->id}}/edit" class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></a>
+                                                {{ Form::hidden('_method', 'DELETE') }}
+                                                {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
+                                            {!! Form::close() !!}
                                         </td>
                                         <td>
                                         </td>

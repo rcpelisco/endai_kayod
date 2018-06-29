@@ -38,8 +38,14 @@
                     <h3>Contact no.</h3>
                     {{ $student->guardian->contact_number }}
                     <hr>
-                    <button class="btn btn-warning btn-sm">Edit</button>
-                    <button class="btn btn-danger btn-sm">Delete</button>
+
+                    {!! Form::open(['action' => ['StudentsController@destroy', $student->id], 'method' => 'POST']) !!}
+                        <a href="/students/{{$student->id}}/edit" class="btn btn-sm btn-warning">Edit  <em class="fa fa-edit"></em></a>
+                        {{ Form::hidden('_method', 'DELETE') }}
+                        {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
+                    {!! Form::close() !!}
+                    {{-- <button class="btn btn-warning btn-sm">Edit</button>
+                    <button class="btn btn-danger btn-sm">Delete</button> --}}
                 </div>
                 <div class="col-xs-6">
                     <h3>Subjects</h3>
@@ -48,10 +54,20 @@
                             @foreach($student->tutorials->where('type', 'interest') as $tutorial)
                             <div class="row row-lessons">
                                 <div class="col-xs-6">
-                                    <h4>{{ $tutorial->title }}</h4>
+                                    @php
+                                        echo $tutorial->paid == 0 ?
+                                            '<h4>' .$tutorial->title. '</h4>'
+                                            : '<h4><s>' .$tutorial->title. '</s></h4>'
+                                    @endphp
                                 </div>
                                 <div class="col-xs-6">
-                                    <div class="text-right">{{ $tutorial->price }}</div>
+                                    <div class="text-right">{{ $tutorial->price }}
+                                        @php
+                                            echo $tutorial->paid == 0 ? 
+                                                '<a href="enrolled/'. $tutorial->enrolled_id .'" class="btn btn-xs btn-primary">Pay</a>'
+                                                : '<a href="" class="btn btn-xs btn-primary disabled">Paid</a>'
+                                        @endphp
+                                    </div>
                                 </div>
                             </div>
                             @endforeach
@@ -61,7 +77,11 @@
                                     <h3>Total</h3>
                                 </div>
                                 <div class="col-xs-6">
-                                <h3 class="text-right">{{ $student->tutorials->where('type', 'interest')->sum('price') }}</h3>
+                                <h3 class="text-right">{{ $student->tutorials->where('type', 'interest')->sum('price') }}
+                                    <small>
+                                        ({{ $student->tutorials->where('paid', 0)->where('type', 'interest')->sum('price') }})
+                                    </small>
+                                </h3>
                                 </div>
                             </div>
                         </div>
@@ -69,10 +89,21 @@
                             @foreach($student->tutorials->where('type', 'academic') as $tutorial)
                             <div class="row row-lessons">
                                 <div class="col-xs-6">
-                                    <h4>{{ $tutorial->title }}</h4>
+                                    @php
+                                        echo $tutorial->paid == 0 ?
+                                            '<h4>' .$tutorial->title. '</h4>'
+                                            : '<h4><s>' .$tutorial->title. '</s></h4>'
+                                    @endphp
                                 </div>
                                 <div class="col-xs-6">
-                                    <div class="text-right">{{ $tutorial->price }}</div>
+                                    <div class="text-right">{{ $tutorial->price }}
+                                        @php
+                                            echo $tutorial->paid == 0 ? 
+                                                '<a href="enrolled/'. $tutorial->enrolled_id .'" class="btn btn-xs btn-primary">Pay</a>'
+                                                : '<a href="" class="btn btn-xs btn-primary disabled">Paid</a>'
+                                        @endphp
+                                        
+                                    </div>
                                 </div>
                             </div>
                             @endforeach
@@ -82,7 +113,12 @@
                                     <h3>Total</h3>
                                 </div>
                                 <div class="col-xs-6">
-                                    <h3 class="text-right">{{ $student->tutorials->where('type', 'academic')->sum('price') }}</h3>
+                                    <h3 class="text-right">
+                                        {{ $student->tutorials->where('type', 'academic')->sum('price') }} 
+                                        <small>
+                                            ({{ $student->tutorials->where('type', 'academic')->where('paid', 0)->sum('price') }})
+                                        </small>
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -94,10 +130,14 @@
                         </div>
                         <div class="col-xs-6">
                             <div class="col-xs-6">
-                                <h2 style="margin-top: 0px;">{{ $student->tutorials->sum('price') }}</h2> 
+                                <h2 style="margin-top: 0px; display:inline;" class="pull-right">
+                                    {{ $student->tutorials->sum('price') }}
+                                </h2> 
                             </div>
                             <div class="col-xs-6">
-                                <button class="btn btn-warning">Unpaid</button>
+                                <h4>
+                                    ({{ $student->tutorials->where('paid', 0)->sum('price') }})
+                                </h4>
                             </div>
                         </div>
                     </div>

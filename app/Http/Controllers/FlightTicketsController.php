@@ -135,9 +135,9 @@ class FlightTicketsController extends Controller
         $airline_companies = AirlineCompany::all();
         $airline_companies = $airline_companies->pluck('name', 'id');
 
-        $flight_ticket->departure_date = date('d/n/Y G:i A', 
+        $flight_ticket->departure_date = date('n/d/Y G:i A', 
             strtotime($flight_ticket->departure_date));
-        $flight_ticket->arrival_date = date('d/n/Y G:i A', 
+        $flight_ticket->arrival_date = date('n/d/Y G:i A', 
             strtotime($flight_ticket->arrival_date));
 
         return view('flight_tickets.edit')->with('data', [
@@ -179,8 +179,10 @@ class FlightTicketsController extends Controller
         $flight_ticket->flight_number = $request->input('flight_number');
         $flight_ticket->origin = $request->input('origin');
         $flight_ticket->destination = $request->input('destination');
-        $flight_ticket->departure_date = $request->input('departure_date');
-        $flight_ticket->arrival_date = $request->input('arrival_date');
+        $flight_ticket->departure_date = date('Y-n-d G:i:s', 
+            strtotime($request->input('departure_date')));
+        $flight_ticket->arrival_date = date('Y-n-d G:i:s', 
+            strtotime($request->input('arrival_date')));
         $flight_ticket->passenger_name = $request->input('passenger_name');
         $flight_ticket->ticket_number = $request->input('ticket_number');
         $flight_ticket->pax_type = $request->input('pax_type');

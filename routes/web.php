@@ -31,11 +31,14 @@ Route::resources([
     'product_log' => 'ProductLogController',
 ]);
 
-Route::get('tutorials/{tutorials}/enroll', ['uses' => 'TutorialsExtraController@enroll', 'as' => 'tutorials.enroll']);
+Route::get('buyers/pay_debt/{id}', ['uses' => 'ProductsExtraController@pay_debt', 'as' => 'students.pay_tutorial']);
 Route::get('products/{product}/buy', ['uses' => 'ProductsExtraController@buy', 'as' => 'products.buy']);
 Route::get('products/{product}/add_stock', ['uses' => 'ProductsExtraController@add_stock', 'as' => 'products.add_stock']);
 Route::put('products/{product}/update_quantity', ['uses' => 'ProductsExtraController@update_quantity', 'as' => 'products.update_quantity']);
 Route::get('products/{product}/edit_history', ['uses' => 'ProductEditHistoryController@show', 'as' => 'products.edit_history']);
+Route::get('students/enrolled/{id}', ['uses' => 'StudentExtraController@pay_tutorial', 'as' => 'students.pay_tutorial']);
+Route::get('tutorials/{tutorials}/enroll', ['uses' => 'TutorialsExtraController@enroll', 'as' => 'tutorials.enroll']);
+Route::post('tutorials/drop', ['uses' => 'TutorialsExtraController@drop', 'as' => 'tutorials.drop']);
 
 Auth::routes();
 

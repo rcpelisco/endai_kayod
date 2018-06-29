@@ -37,7 +37,7 @@
                         <td>{{ $flight_ticket->destination }}</td>
                         <td>
                             {!! Form::open(['action' => ['FlightTicketsController@destroy', $flight_ticket->id], 'method' => 'POST']) !!}
-                                <a href="/airline_companies/{{ $flight_ticket->id }}/edit" 
+                                <a href="/flight_tickets/{{ $flight_ticket->id }}/edit" 
                                     class="btn btn-primary btn-sm"><em class="fa fa-edit"></em></a>
                                 {{ Form::hidden('_method', 'DELETE') }}
                                 {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}

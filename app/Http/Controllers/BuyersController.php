@@ -60,31 +60,27 @@ class BuyersController extends Controller
     public function show($id)
     {
         $buyer = Buyer::find($id);
-        $buyer->products_bought = collect();
-        $buyer->unpaid_products = BuyersPurchasedProduct::where('paid', 0)->get();
-        foreach($buyer->transaction_log as $entry) {
-            $buyer->products_bought = $buyer->products_bought
-                ->push(Product::select('id', 'name', 'price')
-                ->find($entry->product_id))->unique();
-        }
+        $buyer->products_bought = BuyersPurchasedProduct::where('buyer_id', $id)->where('paid', 1)->get();
+        $buyer->unpaid_products = BuyersPurchasedProduct::where('buyer_id', $id)->where('paid', 0)->get();
+        $buyer->transaction_log;
+        
+        foreach($buyer->unpaid_products as $unpaid){
+            $orig_product = Product::find($unpaid->product_id);
+            $unpaid->name = $orig_product->name;
+            $unpaid->price = $orig_product->price;
 
+            $unpaid->quantity = ProductLog::find($unpaid->product_log_id)->quantity;
+        }
+        
         foreach($buyer->products_bought as $product) {
-
-            $total_bought = ProductLog::select('quantity')->where([
-                ['product_id', $product->id],
-                ['sold_to', $buyer->id],
-            ])->get();
+            $orig_product = Product::find($product->product_id);
+            $product->name = $orig_product->name;
+            $product->price = $orig_product->price;
             
-            $quantity = 0;
-
-            foreach($total_bought as $item) {
-                $quantity += $item->quantity;
-            }
-
-            $product->total_bought = $quantity;
+            $product->quantity = ProductLog::find($product->product_log_id)->quantity;
         }
 
-        return '<pre>' . json_encode($buyer, JSON_PRETTY_PRINT) . '</pre>';
+        // return '<pre>' . json_encode($buyer, JSON_PRETTY_PRINT) . '</pre>';
         return view('buyers.view')->with('buyer', $buyer);
     }
 
@@ -116,12 +112,12 @@ class BuyersController extends Controller
         ]);
 
         $buyers = Buyer::find($id);
-        $buyers->first_name = $request->input('name');
-        $buyers->contact_number = $request->input('contact_number');
+        $buyers->name = $request->input('name');
+        $buyers->contact_no = $request->input('contact_number');
         $buyers->address = $request->input('address');
         $buyers->save();
 
-        return redirect('/guardians');
+        return redirect('/buyers');
     }
 
     /**

@@ -12,6 +12,12 @@ use App\BuyersPurchasedProduct;
 
 class ProductsExtraController extends Controller
 {
+    /**
+     * Show all the products available for buying.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function buy($id) {
         $product = Product::find($id);
         $buyers = Buyer::all()->pluck('name', 'id');
@@ -44,29 +50,36 @@ class ProductsExtraController extends Controller
 
         $quantity = $request->input('quantity');
 
-        if($request->input('type') == 'buy') {
+        if($request->input('type') == 'buy' ||
+            $request->input('type') == 'debt') {
             $product->quantity = $product->quantity - $quantity;
             $product_log->sold_to = $request->input('sold_to') == 0 ? null : $request->input('sold_to');
             $this->save_transaction_log($product_log, $product, $request);
-            $this->save_buyers_purchased_product($request, $product); 
-        } else {
+        } else if($request->input('type') == 'add_stock') {
             $product->quantity = $product->quantity + $quantity;
             $product_log->sold_to = null;
         }
+
+
         $product->total_sold = $product->quantity;
         $product->save();
 
         $this->save_product_log($id, $product_log, $request, $product);
        
+        if($product_log->sold_to != null){
+            $this->save_buyers_purchased_product($request, $product, $product_log); 
+        }
         return redirect('/products');
     }
 
-    private function save_buyers_purchased_product(Request $request, Product $product) {
+    private function save_buyers_purchased_product(Request $request, 
+        Product $product, ProductLog $product_log) {
         $buyers_purchased_product = new BuyersPurchasedProduct();
         $buyers_purchased_product->buyer_id = $request->input('sold_to');
         $buyers_purchased_product->product_id = $product->id;
+        $buyers_purchased_product->product_log_id = $product_log->id;
         $buyers_purchased_product->value = $request->input('quantity') * $product->price;
-        $buyers_purchased_product->paid = 0;
+        $buyers_purchased_product->paid = $request->input('type') == 'debt' ? 0 : 1;
 
         $buyers_purchased_product->save();
     }
@@ -88,9 +101,33 @@ class ProductsExtraController extends Controller
 
         $transaction_log->buyer_id = $product_log->sold_to;
         $transaction_log->product_id = $product->id;
-        $transaction_log->transaction_type = 'buy';
+        $transaction_log->transaction_type = $request->input('type');
         $transaction_log->value = $request->input('quantity') * $product->price;
         
         $transaction_log->save();    
+    }
+
+    public function pay_debt($id) {
+        $bpp = BuyersPurchasedProduct::find($id);
+        $bpp->paid = 1;
+        $bpp->save();
+        
+        $this->save_pay_product_log($bpp->product_log_id);
+
+        return redirect('/buyers/' . $bpp->buyer_id);
+    }
+
+    private function save_pay_product_log($product_log_id) {
+        $old_product_log = ProductLog::find($product_log_id);
+        $product_log = new ProductLog();
+
+        $product_log->sold_to = $old_product_log->sold_to;
+        $product_log->product_id = $old_product_log->product_id;
+        $product_log->type = "pay";
+        $product_log->total_sold = $old_product_log->total_sold;
+        $product_log->quantity = $old_product_log->quantity;
+        $product_log->sold_by = Auth::id();
+
+        $product_log->save();
     }
 }

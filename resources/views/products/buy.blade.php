@@ -29,13 +29,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-sm-12">
+            <div class="col-md-4 col-sm-12" id="payment_method">
                 {{Form::label('payment_method', 'Payment Method')}}
                 <br>
                 <label for="full" class="radio-inline">
                     {{ Form::radio('payment_method', 'cash', true, ['id' => 'cash']) }} Cash
                 </label>
-                <label for="installment" class="radio-inline">
+                <label for="installment" class="radio-inline debt_label">
                     {{ Form::radio('payment_method', 'debt', false, ['id' => 'debt']) }} Debt
                 </label>
             </div>
@@ -57,6 +57,8 @@
 <script src="/js/bootstrap-datetimepicker.min.js"></script>
 <script>
     $(function() {
+        checkPaymentMethod()
+        check_buyer()
         $('.error_close').click(() => $(this).hide())
         $('#quantity').on('input', function() {
             let total_payment = $('#total_payment')
@@ -72,17 +74,30 @@
             format: 'MMMM DD, YYYY',
             useCurrent: false,
             sideBySide: true,
-        });
-        $('input[name="payment_method"]').change(() => {
+        })
 
-            $('#payment-date').show()
-            if($('#full').is(':checked')) {
-                $('#payment-date').hide()
-            }
+        $('input[name="payment_method"]').change(() => {
+            checkPaymentMethod()
+        })
+
+        $('select[name="sold_to"]').change(() => {
+            check_buyer()
         })
 
         function checkPaymentMethod() {
-            
+            $('input[name="type"]').val('buy')
+            if($('#debt').is(':checked')) {
+                $('input[name="type"]').val('debt')
+            }    
+            console.log($('input[name="type"]').val())
+        }
+
+        function check_buyer(){
+            $('.debt_label').show()
+            if($('select[name="sold_to"]').val() == 0){
+                $('.debt_label').hide()
+                
+            }
         }
     })
 </script>

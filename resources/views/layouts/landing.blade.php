@@ -16,7 +16,18 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">@yield('header')</h1>
+				<div class="col-xs-10">
+					<h1 class="page-header">@yield('header')</h1>
+					
+				</div>
+				<div class="col-xs-2">
+					<a href="{{ route('logout') }}" 
+						onclick="event.preventDefault(); document.getElementById('logout_form').submit();" 
+							style="margin-top: 20px" class="pull-right text-right btn btn-primary">LOGOUT</a>
+				</div>
+				<form id="logout_form" action="{{ route('logout') }}" method="POST">
+					{{ csrf_field() }}		
+				</form>
 				@yield('create_button')
 			</div>
 		</div><!--/.row-->
