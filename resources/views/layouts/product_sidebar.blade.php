@@ -10,4 +10,3 @@
 	<a href="{{route('product_log.index')}}"><em class="fa fa-id-card">&nbsp;</em>Logs</a></li>
 			
 @endsection()
-		
