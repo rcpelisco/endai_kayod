@@ -7,7 +7,7 @@
 @include('layouts.tutorial_sidebar')
 
 @section('create_button')
-    <a href="students/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Student</a>
+    <a href="/students/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Student</a>
 @endsection
 
 @section('content')

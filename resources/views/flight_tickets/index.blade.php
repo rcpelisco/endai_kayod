@@ -18,7 +18,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Booking Ref.</th>
-                        <th>Airline PNR</th>
+                        <th>Booking Date</th>
                         <th>Flight Number</th>
                         <th>Origin</th>
                         <th>Destination</th>
@@ -31,7 +31,7 @@
                             <td>{{ $flight_ticket->passenger_name }}</td>
                         <td><a href="/flight_tickets/{{ $flight_ticket->id }}">
                             {{ $flight_ticket->booking_reference }}</a></td>
-                        <td>{{ $flight_ticket->pnr }}</td>
+                        <td>{{ $flight_ticket->booking_date }}</td>
                         <td>{{ $flight_ticket->flight_number }}</td>
                         <td>{{ $flight_ticket->origin }}</td>
                         <td>{{ $flight_ticket->destination }}</td>

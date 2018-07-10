@@ -11,7 +11,7 @@
 				<div class="panel-body easypiechart-panel">
 					<h4>Products</h4>
 					<div class="easypiechart"><span class="percent">
-						<a href="/products">
+						<a href="./products">
 							<button class="btn btn-primary">Open</button></span>
 						</a>
 					</div>

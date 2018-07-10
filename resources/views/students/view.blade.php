@@ -48,7 +48,7 @@
                     <button class="btn btn-danger btn-sm">Delete</button> --}}
                 </div>
                 <div class="col-xs-6">
-                    <h3>Subjects</h3>
+                    <h3>Month <small><a href="#" class="btn btn-sm btn-info pull-right">Monthly Payables</a></small></h3>
                     <div class="row">
                         <div class="col-xs-6"><div class="type-title">Interests</div>
                             @foreach($student->tutorials->where('type', 'interest') as $tutorial)
@@ -67,6 +67,7 @@
                                                 '<a href="enrolled/'. $tutorial->enrolled_id .'" class="btn btn-xs btn-primary">Pay</a>'
                                                 : '<a href="" class="btn btn-xs btn-primary disabled">Paid</a>'
                                         @endphp
+                                        <a href="#" class="btn btn-xs btn-danger">Drop</a>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +103,8 @@
                                                 '<a href="enrolled/'. $tutorial->enrolled_id .'" class="btn btn-xs btn-primary">Pay</a>'
                                                 : '<a href="" class="btn btn-xs btn-primary disabled">Paid</a>'
                                         @endphp
-                                        
+                                        <a href="#" class="btn btn-xs btn-danger">Drop</a>
+
                                     </div>
                                 </div>
                             </div>
