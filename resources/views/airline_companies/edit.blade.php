@@ -54,7 +54,7 @@
         <br>
         <div class="row">
             <div class="col-xs-4">
-                <img src="/{{ $airline_company->logo_path }}" alt="" id="airline_logo">
+                <img src="{{ url($airline_company->logo_path) }}" alt="" id="airline_logo">
             </div>
         </div>
         <div class="row">

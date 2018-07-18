@@ -17,4 +17,8 @@ class Student extends Model
     public function tutorials() {
         return $this->belongsToMany('App\Tutorial', 'enrolled');
     }
+
+    public function enrolled_logs() {
+        return $this->hasManyThrough('App\EnrolledLog', 'App\Enrolled');
+    }
 }

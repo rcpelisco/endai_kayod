@@ -7,7 +7,7 @@
 @include('layouts.flight_tickets_sidebar')
 
 @section('create_button')
-    <a href="airline_companies/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Airline Company</a>
+    <a href="{{route('airline_companies.create')}}" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Airline Company</a>
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@
                 <tbody>
                     @foreach($airline_companies as $airline_company) 
                     <tr>
-                        <td><a href="airline_companies/{{ $airline_company->id }}">
+                        <td><a href="{{route('airline_companies.show', ['airline_company' => $airline_company->id])}}">
                             {{ $airline_company->name }}
                         </a></td>
                         <td>{{ $airline_company->address }}</td>

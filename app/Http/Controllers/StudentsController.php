@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Guardian;
+use App\EnrolledLog;
+use Carbon\Carbon;
 
 class StudentsController extends Controller
 {
@@ -88,17 +90,26 @@ class StudentsController extends Controller
     public function show($id)
     {
         $student = Student::find($id);
+        
         foreach($student->enrolled as $enrolled) {
             foreach($student->tutorials as $tutorial) {
                 if($enrolled->tutorial_id == $tutorial->id) {
-                    $tutorial->sessions_left = $enrolled->sessions_left;
                     $tutorial->credit = $enrolled->credit;
-                    $tutorial->paid = $enrolled->active;
                     $tutorial->enrolled_id = $enrolled->id;
                 }
             }
         }
-        // return $student->tutorials;
+
+        $student->tutorials = $student->tutorials->map(function($item, $key) use ($student) {
+            foreach($student->enrolled_logs as $log) {
+                if($item->enrolled_id == $log->enrolled_id) {
+                    $item->paid += $log->transaction_type == 'pay' ? $log->amount : 0;
+                }
+            }
+            return $item;
+        });
+
+        // $student->enrolled_logs;
         // return '<pre>' . json_encode($student, JSON_PRETTY_PRINT) . '</pre>';
         return view('students.view')->with('student', $student);
     }

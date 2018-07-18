@@ -7,7 +7,7 @@
 @include('layouts.tutorial_sidebar')
 
 @section('create_button')
-    <a href="tutorials/create" class="btn btn-sm btn-success" 
+    <a href="{{route('tutorials.create')}}" class="btn btn-sm btn-success" 
         style="margin-bottom:15px; margin-left:10px;">Add Lesson</a>
 @endsection
 
@@ -30,6 +30,7 @@
                                 <th>No. of Enrollees</th>
                                 <th>Price</th>
                                 <th>Actions</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,12 +42,12 @@
                                         <td>{{ count($tutorial->enrolled) }}</td>
                                         <td>{{ $tutorial->price }}</td>
                                         <td>
-                                            <a href="tutorials/{{ $tutorial->id }}/enroll" 
+                                            <a href="{{route('tutorials.enroll', ['tutorial' => $tutorial->id])}}" 
                                                 class="btn btn-primary btn-sm">Enroll Student</a>
                                         </td>
                                         <td>
                                             {!! Form::open(['action' => ['TutorialsController@destroy', $tutorial->id], 'method' => 'POST']) !!}
-                                                <a href="/tutorials/{{$tutorial->id}}/edit" class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></a>
+                                                <a href="{{route('tutorials.edit', ['tutorial' => $tutorial->id])}}" class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></a>
                                                 {{ Form::hidden('_method', 'DELETE') }}
                                                 {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
                                             {!! Form::close() !!}
@@ -59,7 +60,7 @@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="tab2">
-                    <table class="table" id="academicsTable" style="width: 100%">
+                    <table class="table" id="academicsTable" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Title</th>
@@ -67,6 +68,7 @@
                                 <th>No. of Enrollees</th>
                                 <th>Price</th>
                                 <th>Actions</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,16 +80,14 @@
                                         <td>{{ count($tutorial->enrolled) }}</td>
                                         <td>{{ $tutorial->price }}</td>
                                         <td>
-                                            <a href="tutorials/{{ $tutorial->id }}/enroll" class="btn btn-primary btn-sm">Enroll Student</a>
+                                            <a href="{{route('tutorials.enroll', ['tutorial' => $tutorial->id])}}" class="btn btn-primary btn-sm">Enroll Student</a>
                                         </td>
                                         <td>
                                             {!! Form::open(['action' => ['TutorialsController@destroy', $tutorial->id], 'method' => 'POST']) !!}
-                                                <a href="/tutorials/{{$tutorial->id}}/edit" class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></a>
+                                                <a href="{{route('tutorials.edit', ['tutorial' => $tutorial->id])}}" class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></a>
                                                 {{ Form::hidden('_method', 'DELETE') }}
                                                 {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
                                             {!! Form::close() !!}
-                                        </td>
-                                        <td>
                                         </td>
                                     </tr>
                                 @endif
@@ -103,24 +103,29 @@
 @section('scripts')
 <script>
     $(function() {
-        $('a[data-toggle="tab"]').on('shown.bs.tab', () => {
-            $($.fn.dataTable.tables(true)).DataTable()
-                .columns.adjust()
+        // $('a[data-toggle="tab"]').on('shown.bs.tab', () => {
+        //     $($.fn.dataTable.tables(true)).DataTable()
+        //         .columns.adjust()
+        // })
+    
+        let tutorials = $('#tutorialsTable').DataTable({
+            "columns": [
+                null,
+                null,
+                { "width": "15%" },
+                { "width": "10%" },
+                null,
+                null
+            ]
         })
         let academics = $('#academicsTable').DataTable({
             "columns": [
                 null,
                 null,
+                { "width": "15%" },
+                { "width": "10%" },
                 null,
-                { "width": "15%" }
-            ]
-        })
-        let tutorials = $('#tutorialsTable').DataTable({
-            "columns": [
-                null,
-                null,
-                null,
-                { "width": "15%" }
+                null
             ]
         })
     })

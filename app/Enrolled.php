@@ -16,4 +16,8 @@ class Enrolled extends Model
     public function tutorial() {
         return $this->belongsTo('App\Tutorial');
     }
+
+    public function enrolled_logs() {
+        return $this->hasMany('App\EnrolledLog', 'enrolled_id', 'id');
+    }
 }

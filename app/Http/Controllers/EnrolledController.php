@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Enrolled;
+use App\EnrolledLog;
 use App\Tutorial;
 
 class EnrolledController extends Controller
@@ -45,10 +46,21 @@ class EnrolledController extends Controller
 
         $enrolled->sessions_left = $request->input('sessions_left');
         $enrolled->credit = $tutorial->price;
-        $enrolled->active = 0;
+        $enrolled->active = 1;
 
         $enrolled->save();
+
+        $this->save_enrolled_log($enrolled);
+
         return redirect("/tutorials/{$tutorial->id}/enroll");
+    }
+
+    private function save_enrolled_log(Enrolled $enrolled) {
+        $enrolled_logs = new EnrolledLog();
+        $enrolled_logs->enrolled_id = $enrolled->id;
+        $enrolled_logs->amount = $enrolled->credit;
+        $enrolled_logs->transaction_type = 'credit';
+        $enrolled_logs->save();
     }
 
     /**

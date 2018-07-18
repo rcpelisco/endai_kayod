@@ -7,7 +7,7 @@
 @include('layouts.tutorial_sidebar')
     
 @section('create_button')
-    <a href="guardians/create" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Guardian</a>
+    <a href="{{route('guardians.create')}}" class="btn btn-sm btn-success" style="margin-bottom:15px; margin-left:10px;">Add Guardian</a>
 @endsection
 
 @section('content')
@@ -32,7 +32,7 @@
                         <td>{{ $guardian->address }}</td>
                         <td>
                             {!! Form::open(['action' => ['GuardiansController@destroy', $guardian->id], 'method' => 'POST']) !!}
-                                <a href="/guardians/{{$guardian->id}}/edit" class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></button></a>
+                                <a href="{{route('guardians.edit', ['guardian' => $guardian->id])}}" class="btn btn-sm btn-warning"><em class="fa fa-edit"></em></button></a>
                                 {{ Form::hidden('_method', 'DELETE') }}
                                 {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
                             {!! Form::close() !!}

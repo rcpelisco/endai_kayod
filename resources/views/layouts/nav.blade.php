@@ -6,7 +6,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span></button>
-			<a class="navbar-brand" href="/"><span>The billionaire’s </span>conglomerate</a>
+			<a class="navbar-brand" href="{{route('welcome')}}"><span>The billionaire’s </span>conglomerate</a>
 		</div>
 	</div><!-- /.container-fluid -->
 </nav>

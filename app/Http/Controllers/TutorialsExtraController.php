@@ -34,8 +34,9 @@ class TutorialsExtraController extends Controller
         $link = Enrolled::where('tutorial_id', $tutorial_id)
             ->where('student_id', $student_id)
             ->first();
-        $link->delete();
-
+        $link->active = 0;
+        $link->save();
+        
         return back();
     }
 }

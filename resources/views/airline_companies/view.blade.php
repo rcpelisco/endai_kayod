@@ -19,7 +19,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="/{{ $airline_company->logo_path }}" alt="">
+                    <img src="{{ url($airline_company->logo_path) }}" alt="">
                 </div>
                 <div class="col-md-8">
                     <p>Address: {{ $airline_company->address }}</p>
@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-md-12">
                     {!! Form::open(['action' => ['AirlineCompaniesController@destroy', $airline_company->id], 'method' => 'POST']) !!}
-                        <a href="/airline_companies/{{ $airline_company->id }}/edit" class="btn btn-primary">Edit</a>
+                        <a href="{{route('airline_companies.edit', ['airline_company' => $airline_company->id])}}" class="btn btn-primary">Edit</a>
                         {{ Form::hidden('_method', 'DELETE') }}
                         {{ Form::submit('Delete', ['class'=>'btn btn-danger'])}}
                     {!! Form::close() !!}

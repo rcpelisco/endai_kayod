@@ -7,7 +7,7 @@
 @include('layouts.product_sidebar')
 
 @section('create_button')
-    <a href="buyers/create" class="btn btn-sm btn-primary" style="margin-bottom:15px; margin-left:10px;">Add Buyer</a>
+    <a href="{{route('buyers.create')}}" class="btn btn-sm btn-primary" style="margin-bottom:15px; margin-left:10px;">Add Buyer</a>
 @endsection
 
 @section('content')
@@ -25,12 +25,12 @@
                 <tbody>
                     @foreach($buyers as $buyer) 
                     <tr>
-                        <td><a href="/buyers/{{ $buyer->id }}">{{ $buyer->name }}</a></td>
+                        <td><a href="{{route('buyers.show', ['buyer' => $buyer->id])}}">{{ $buyer->name }}</a></td>
                         <td>{{ $buyer->address }}</td>
                         <td>{{ $buyer->contact_no }}</td>
                         <td>
                             {!! Form::open(['action' => ['BuyersController@destroy', $buyer->id], 'method' => 'POST']) !!}
-                                <a href="/buyers/{{ $buyer->id }}/edit" class="btn btn-warning btn-sm"><em class="fa fa-edit"></em></a>
+                                <a href="{{route('buyers.edit', ['buyer' => $buyer->id])}}" class="btn btn-warning btn-sm"><em class="fa fa-edit"></em></a>
                                 {{ Form::hidden('_method', 'DELETE') }}
                                 {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
                             {!! Form::close() !!}
