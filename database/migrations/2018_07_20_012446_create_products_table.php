@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAirlineCompaniesTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateAirlineCompaniesTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('airline_companies')) {
-            return;
-        }
-        Schema::create('airline_companies', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('address', 250);
-            $table->string('phone_number');
-            $table->string('email');
-            $table->string('logo_path');
-            $table->string('pnr');
+            $table->string('description', 200);
+            $table->integer('quantity');
+            $table->integer('total_sold');
+            $table->double('price');
+            $table->boolean('active');
             $table->timestamps();
         });
     }
@@ -35,6 +32,6 @@ class CreateAirlineCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('airline_companies');
+        Schema::dropIfExists('products');
     }
 }

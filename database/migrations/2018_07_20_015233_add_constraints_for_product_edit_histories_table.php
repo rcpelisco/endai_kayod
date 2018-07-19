@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignKey extends Migration
+class AddConstraintsForProductEditHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddForeignKey extends Migration
      */
     public function up()
     {
-        Schema::table('product_edit_histories', function (Blueprint $table) {    
+        Schema::table('product_edit_histories', function (Blueprint $table) {
             $table->foreign('product_id')->references('id')->on('products');
+            //
         });
     }
 
@@ -25,6 +26,8 @@ class AddForeignKey extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('product_edit_histories', function (Blueprint $table) {
+            $table->dropForeign(['product_id']);            
+        });
     }
 }

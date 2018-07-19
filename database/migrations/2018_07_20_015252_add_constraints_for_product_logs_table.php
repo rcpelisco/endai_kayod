@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductLogsTable extends Migration
+class AddConstraintsForProductLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateProductLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_logs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('product_id')->unsigned();
-            $table->integer('total_sold');
-            $table->integer('sold_by')->unsigned();
-            $table->timestamps();
-
+        Schema::table('product_logs', function (Blueprint $table) {
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('sold_by')->references('id')->on('users');
+            $table->foreign('sold_to')->references('id')->on('buyers');
+            //
         });
     }
 
@@ -32,6 +28,11 @@ class CreateProductLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_logs');
+        Schema::table('product_logs', function (Blueprint $table) {
+            $table->dropForeign(['product_id']);            
+            $table->dropForeign(['sold_by']);            
+            $table->dropForeign(['sold_to']);            
+            //
+        });
     }
 }

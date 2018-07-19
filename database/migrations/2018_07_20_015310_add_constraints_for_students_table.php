@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EnrolledLogsTimestamps extends Migration
+class AddConstraintsForStudentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class EnrolledLogsTimestamps extends Migration
      */
     public function up()
     {
-        Schema::table('enrolled_logs', function(Blueprint $table) {
-            $table->timestamps();
+        Schema::table('students', function (Blueprint $table) {
+            $table->foreign('guardian_id')->references('id')->on('guardians');
+            //
         });
     }
 
@@ -25,6 +26,9 @@ class EnrolledLogsTimestamps extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('students', function (Blueprint $table) {
+            $table->dropForeign(['guardian_id']);            
+            //
+        });
     }
 }

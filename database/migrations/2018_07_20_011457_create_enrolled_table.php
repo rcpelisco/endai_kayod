@@ -13,20 +13,14 @@ class CreateEnrolledTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('enrolled')) {
-            return;
-        }
-
         Schema::create('enrolled', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tutorial_id')->unsigned();
             $table->integer('student_id')->unsigned();
-            $table->integer('sessions_left');
+            $table->integer('sessions_left')->nullable();
             $table->double('credit');
+            $table->boolean('active');
             $table->timestamps();
-
-            $table->foreign('tutorial_id')->references('id')->on('tutorials');
-            $table->foreign('student_id')->references('id')->on('students');
         });
     }
 

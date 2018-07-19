@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductTable extends Migration
+class CreateBuyersTransactionLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,12 @@ class CreateProductTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('product')) {
-            return;
-        }
-
-        Schema::create('product', function (Blueprint $table) {
+        Schema::create('buyers_transaction_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('quantity');
-            $table->integer('price');
-            $table->integer('total_sold');
+            $table->integer('product_id')->unsigned()->nullable();
+            $table->integer('buyer_id')->unsigned();
+            $table->double('value');
+            $table->enum('transaction_type', ['buy', 'deby', 'pay']);
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ class CreateProductTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product');
+        Schema::dropIfExists('buyers_transaction_logs');
     }
 }

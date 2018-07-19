@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBuyersTable extends Migration
+class CreateAirlineCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateBuyersTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('buyers')) {
-            return;
-        }
-        Schema::create('buyers', function (Blueprint $table) {
+        Schema::create('airline_companies', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('name');
-            $table->text('address');
-            $table->text('contact_no');
+            $table->string('name');
+            $table->string('address', 250);
+            $table->string('phone_number');
+            $table->string('email');
+            $table->string('logo_path');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateBuyersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('buyers');
+        Schema::dropIfExists('airline_companies');
     }
 }

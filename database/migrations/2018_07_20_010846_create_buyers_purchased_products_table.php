@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BuyersPurchasedProducts extends Migration
+class CreateBuyersPurchasedProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,12 +17,10 @@ class BuyersPurchasedProducts extends Migration
             $table->increments('id');
             $table->integer('buyer_id')->unsigned();
             $table->integer('product_id')->unsigned();
-            $table->float('value');
+            $table->integer('product_log_id')->unsigned();
+            $table->double('value');
             $table->boolean('paid');
             $table->timestamps();
-
-            $table->foreign('buyer_id')->references('id')->on('buyers');
-            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBuyersTransactionLogsTable extends Migration
+class CreateProductLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateBuyersTransactionLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('buyers_transaction_logs', function (Blueprint $table) {
+        Schema::create('product_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('buyer_id')->unsigned();
             $table->integer('product_id')->unsigned();
-            $table->enum('transaction_type', ['pay', 'buy']);
-            $table->float('value');
+            $table->integer('sold_by')->unsigned();
+            $table->integer('sold_to')->unsigned()->nullable();
+            $table->integer('quantity')->nullable();
+            $table->double('total_sold')->nullable();
+            $table->enum('type', ['add_stock','buy','edit','delete','debt','pay']);
             $table->timestamps();
-
-            $table->foreign('buyer_id')->references('id')->on('buyers');
-            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 
@@ -33,6 +32,6 @@ class CreateBuyersTransactionLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('buyers_transaction_logs');
+        Schema::dropIfExists('product_logs');
     }
 }

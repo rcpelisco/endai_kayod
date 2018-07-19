@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTutorialsTable extends Migration
+class CreateProductEditHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateTutorialsTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('tutorials')) {
-            return;
-        }
-
-        Schema::create('tutorials', function (Blueprint $table) {
+        Schema::create('product_edit_histories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title', 45);
-            $table->string('description', 200);
+            $table->integer('product_id')->unsigned();
+            $table->integer('edited_by')->unsigned();
+            $table->string('product_name');
+            $table->string('description');
+            $table->string('quantity');
             $table->double('price');
-            $table->enum('type', ['academic', 'interest']);
             $table->timestamps();
         });
     }
@@ -34,6 +32,6 @@ class CreateTutorialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tutorials');
+        Schema::dropIfExists('product_edit_histories');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateProductsTable extends Migration
+class AddConstraintsForEnrolledLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class UpdateProductsTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasColumn('products', 'description')) {
-            return;
-        }
-
-        Schema::table('products', function (Blueprint $table) {
-            $table->string('description')->after('name');
+        Schema::table('enrolled_logs', function (Blueprint $table) {
+            $table->foreign('enrolled_id')->references('id')->on('enrolled');
+            
         });
     }
 
@@ -29,6 +26,8 @@ class UpdateProductsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('enrolled_logs', function (Blueprint $table) {
+            $table->dropForeign(['enrolled_id']);
+        });
     }
 }
