@@ -171,7 +171,7 @@
                     </div>
                     <hr style="margin-bottom: 0px;">
                     <div class="row">
-                        <div class="col-xs-6"><h2 style="margin-bottom: 0px;">Bayronon</h2></div>
+                        <div class="col-xs-6"><h2 style="margin-bottom: 0px;">Payables</h2></div>
                         <div class="col-xs-6"><h2 style="margin-bottom: 0px;" id="total">12000</h2></div>
                     </div>
                 </div>

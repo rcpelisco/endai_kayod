@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2018 at 12:39 PM
+-- Generation Time: Jul 19, 2018 at 04:29 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.1.13
 
@@ -45,7 +45,8 @@ INSERT INTO `airline_companies` (`id`, `name`, `address`, `phone_number`, `email
 (10, 'Air Asia', 'Bldg, 4 unit 1 Salem Complex, Domestic Road Pasay, City, Philippines', '6327422742', 'http://www.airasia.com/ph', 'images/BRauoweKg5HIuJWVH0XTwKJrdGT80A0KjaremAIi.png', '2018-06-18 05:34:50', '2018-06-18 05:34:50'),
 (11, 'Philippine Airlines', 'Manila', '6328558888', 'webmgr@pal.com.ph', 'images/dgEV0vvsaqyM11cIn7NVAbIX89toihPFGmXQ2VJa.png', '2018-06-18 05:39:12', '2018-06-18 05:39:12'),
 (12, 'Cebu Pacific', 'Airline Operations Center Building Philippines', '6327020888', NULL, 'images/hE86T3UDlC3u3vuhmGSx5i1DPwNc8cUOzeqpA4NR.png', '2018-06-18 05:45:48', '2018-06-18 05:45:48'),
-(13, 'Tiger Air', 'Cebu', '6327984488', NULL, 'images/y5MpJLYWZFBdPAGcSDsXvPkDdqgHDejcGCUPTLT8.png', '2018-06-18 06:29:01', '2018-06-18 06:29:01');
+(13, 'Tiger Air', 'Cebu', '6327984488', NULL, 'images/y5MpJLYWZFBdPAGcSDsXvPkDdqgHDejcGCUPTLT8.png', '2018-06-18 06:29:01', '2018-06-18 06:29:01'),
+(14, 'Cebgo', 'Baan Riverside', '091246745', 'cebgo@gmail.com', 'images/U3D41hS2iSI6MmlGVpTlD8adZGG3XZ38hCvReXHk.jpeg', '2018-06-29 12:31:03', '2018-06-29 12:31:03');
 
 -- --------------------------------------------------------
 
@@ -110,6 +111,21 @@ CREATE TABLE `enrolled` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enrolled_logs`
+--
+
+CREATE TABLE `enrolled_logs` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `enrolled_id` int(10) UNSIGNED NOT NULL,
+  `amount` double NOT NULL,
+  `transaction_type` enum('pay','credit') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -211,7 +227,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (40, '2018_06_25_134818_add_debt_pay_type', 25),
 (41, '2018_06_25_145518_update_buyers_transaction_log_transaction_type', 26),
 (42, '2018_06_25_161538_add_foreign_key_buyers_purchased_products', 27),
-(43, '2018_06_29_181939_add_active_to_tutorials', 28);
+(43, '2018_06_29_181939_add_active_to_tutorials', 28),
+(44, '2018_07_17_110130_enrolled_logs', 29),
+(45, '2018_07_17_111857_enrolled_logs_timestamps', 30),
+(46, '2018_07_17_114018_enrolled_logs_edit', 31);
 
 -- --------------------------------------------------------
 
@@ -241,7 +260,7 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 CREATE TABLE `products` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `total_sold` int(11) NOT NULL,
@@ -342,9 +361,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Madelene Amante', 'madelenebt@gmail.com', '$2y$10$2yTb8hmMIWIj6B9LODrEkOKxUI.q5upF8Y4biqnD.dC5KBU.WzegO', '13WNVMgn64jdzDsYOSCBCtAOJmM8X5Ty6wtw79MB68QUKewqXzZHv2SekgXk', '2018-04-13 01:18:44', '2018-04-13 01:18:44'),
+(1, 'Madelene Amante', 'madelenebt@gmail.com', '$2y$10$2yTb8hmMIWIj6B9LODrEkOKxUI.q5upF8Y4biqnD.dC5KBU.WzegO', 'uVAtaQrymMDj7STl6w81j4G0xAXrKG7mMV64wwAN2gaeSBzbJubONwm8NqyF', '2018-04-13 01:18:44', '2018-04-13 01:18:44'),
 (2, 'dev', 'dev@dev.com', '$2y$10$6AlJ6UwjfilDBe7Wu4muGeRHW6mMtnWRRyShtZKGS/g1DrELcjKNu', NULL, '2018-04-13 01:44:39', '2018-04-13 01:44:39'),
-(3, 'admin', 'admin@admin.com', '$2y$10$Jxu.Pw/vx8qxUH8SazT5ZeN40MamoI9S50WUAxGLnhd.N2NC9DS56', '2gGKaFZzyZEsZOiwwTbLOCpAMFz5bsMi64j7lrOrqrmavpe3T9Odb5kpgDxo', '2018-04-17 03:51:37', '2018-04-17 03:51:37'),
+(3, 'admin', 'admin@admin.com', '$2y$10$Jxu.Pw/vx8qxUH8SazT5ZeN40MamoI9S50WUAxGLnhd.N2NC9DS56', 'Fc52yD7fpSojZkpEzNoiQvXhBEQhex4JBClevO8LV7QBibwhJQ5DQymjFEYh', '2018-04-17 03:51:37', '2018-04-17 03:51:37'),
 (4, 'dodong', 'dodong@yahoo.com', '$2y$10$rKTe.LnFVHG0oBHWx6/ue.u/5I2NtIAn97qXW6N/Q.E8ygzsH31v.', NULL, '2018-05-17 11:26:20', '2018-05-17 11:26:20'),
 (5, 'Bamb boo', 'og.gag@gmail.com', '$2y$10$i2Uoj.PPeNGPzrsV9f0U1eY2V./P0nMhf8TqUAvman60ED9ED8H02', 'bqOjPKhYvcu3K1qewVUTmbZQSYsJ52j5wKHWr029zKqXQesbn2ppAIoLS2yY', '2018-06-25 09:30:49', '2018-06-25 09:30:49');
 
@@ -388,6 +407,13 @@ ALTER TABLE `enrolled`
   ADD PRIMARY KEY (`id`),
   ADD KEY `enrolled_tutorial_id_foreign` (`tutorial_id`),
   ADD KEY `enrolled_student_id_foreign` (`student_id`);
+
+--
+-- Indexes for table `enrolled_logs`
+--
+ALTER TABLE `enrolled_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `enrolled_logs_enrolled_id_foreign` (`enrolled_id`);
 
 --
 -- Indexes for table `flight_tickets`
@@ -469,62 +495,67 @@ ALTER TABLE `airline_companies`
 -- AUTO_INCREMENT for table `buyers`
 --
 ALTER TABLE `buyers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `buyers_purchased_products`
 --
 ALTER TABLE `buyers_purchased_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `buyers_transaction_logs`
 --
 ALTER TABLE `buyers_transaction_logs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `enrolled`
 --
 ALTER TABLE `enrolled`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+--
+-- AUTO_INCREMENT for table `enrolled_logs`
+--
+ALTER TABLE `enrolled_logs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 --
 -- AUTO_INCREMENT for table `flight_tickets`
 --
 ALTER TABLE `flight_tickets`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `guardians`
 --
 ALTER TABLE `guardians`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `product_edit_histories`
 --
 ALTER TABLE `product_edit_histories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `product_logs`
 --
 ALTER TABLE `product_logs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tutorials`
 --
 ALTER TABLE `tutorials`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -555,6 +586,12 @@ ALTER TABLE `buyers_transaction_logs`
 ALTER TABLE `enrolled`
   ADD CONSTRAINT `enrolled_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
   ADD CONSTRAINT `enrolled_tutorial_id_foreign` FOREIGN KEY (`tutorial_id`) REFERENCES `tutorials` (`id`);
+
+--
+-- Constraints for table `enrolled_logs`
+--
+ALTER TABLE `enrolled_logs`
+  ADD CONSTRAINT `enrolled_logs_enrolled_id_foreign` FOREIGN KEY (`enrolled_id`) REFERENCES `enrolled` (`id`);
 
 --
 -- Constraints for table `flight_tickets`
