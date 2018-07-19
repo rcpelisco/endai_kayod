@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Enrolled;
 use App\EnrolledLog;
 use App\Tutorial;
+use App\Student;
 
 class EnrolledController extends Controller
 {
@@ -17,6 +18,9 @@ class EnrolledController extends Controller
     public function index()
     {
         $students = Student::all();
+
+        
+
         return view('enrolled.index')->with('students', $students);
     }
 
@@ -32,6 +36,19 @@ class EnrolledController extends Controller
             'student_id' => 'required',
             'tutorial_id' => 'required',
         ]);
+
+        $enrolled = Enrolled::where(['student_id' => $request->input('student_id'), 
+            'tutorial_id' => $request->input('tutorial_id')])->get();
+        // return $enrolled->isNotEmpty();
+
+        if($enrolled->isNotEmpty()) {
+            $enrolled = Enrolled::find($enrolled->first()->id);
+
+            $enrolled->active = 1;
+            $enrolled->save();
+
+            return back();
+        }
 
         $enrolled = new Enrolled();
         $enrolled->student_id = $request->input('student_id');

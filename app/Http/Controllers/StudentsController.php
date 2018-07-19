@@ -96,6 +96,7 @@ class StudentsController extends Controller
                 if($enrolled->tutorial_id == $tutorial->id) {
                     $tutorial->credit = $enrolled->credit;
                     $tutorial->enrolled_id = $enrolled->id;
+                    $tutorial->active = $enrolled->active;
                 }
             }
         }
@@ -110,7 +111,7 @@ class StudentsController extends Controller
         });
 
         // $student->enrolled_logs;
-        // return '<pre>' . json_encode($student, JSON_PRETTY_PRINT) . '</pre>';
+        // return '<pre>' . json_encode($student->tutorials, JSON_PRETTY_PRINT) . '</pre>';
         return view('students.view')->with('student', $student);
     }
 

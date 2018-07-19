@@ -48,10 +48,10 @@
                     <button class="btn btn-danger btn-sm">Delete</button> --}}
                 </div>
                 <div class="col-xs-6">
-                    <h3>Payments<small><a href="#" class="btn btn-sm btn-info pull-right">Records</a></small></h3>
+                    <h3>Payments<small></small></h3>
                     <div class="row">
                         <div class="col-xs-12">
-                            @foreach($student->tutorials as $tutorial)
+                            @foreach($student->tutorials->where('active', 1) as $tutorial)
                             <div class="row row-lessons">
                                 <div class="col-xs-7">
                                     <h4>
@@ -104,7 +104,7 @@
                                     <h3>Total</h3>
                                 </div>
                                 <div class="col-xs-6">
-                                <h3 class="text-right">{{ $student->tutorials->sum('price')}}
+                                <h3 class="text-right">{{ $student->tutorials->where('active', 1)->sum('price')}}
                                     <small>
                                         ({{ $student->enrolled_logs
                                             ->where('transaction_type', 'credit')->sum('amount') - 

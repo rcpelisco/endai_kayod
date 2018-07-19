@@ -12,7 +12,8 @@ class TutorialsExtraController extends Controller
     public function enroll($id) {
         $tutorial = Tutorial::find($id);
         $students = Student::where('active', 1)->get();
-
+        $tutorial->enrolled;
+        
         foreach($students as $student) {
             $student->enrolled = false;
             foreach($tutorial->students as $enrolled) {
@@ -20,10 +21,15 @@ class TutorialsExtraController extends Controller
                     $student->enrolled = true;
                 }
             }
+            foreach($tutorial->enrolled as $enrolled) {
+                if($enrolled->student_id == $student->id) {
+                    $student->enrolled = $enrolled->active == 1 ? true : false;
+                }
+            }
         }
 
         $data = (object) ['tutorial' => $tutorial, 'students' => $students];
-        
+        // return '<pre>' . json_encode($data, 128) . '</pre>';
         return view('tutorials.enroll')->with('data', $data);
     }
     
