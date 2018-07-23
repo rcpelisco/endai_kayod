@@ -59,7 +59,7 @@
     $(function() {
         checkPaymentMethod()
         check_buyer()
-        $('.error_close').click(() => $(this).hide())
+        $('.error_close').click(function() {$(this).hide()})
         $('#quantity').on('input', function() {
             let total_payment = $('#total_payment')
             let price = total_payment.attr('data-price')

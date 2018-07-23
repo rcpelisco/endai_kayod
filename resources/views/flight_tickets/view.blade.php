@@ -119,6 +119,15 @@
                 <td><small>{{ $flight_ticket->departure_date }}</small></td>
                 <td><small>{{ $flight_ticket->arrival_date }}</small></td>
             </tr>
+            @if(collect($flight_ticket->second_flight)->isNotEmpty()) 
+            <tr>
+                <td><small>{{ $flight_ticket->second_flight->flight_number }}</small></td>
+                <td><small>{{ $flight_ticket->second_flight->origin }}</small></td>
+                <td><small>{{ $flight_ticket->second_flight->destination }}</small></td>
+                <td><small>{{ $flight_ticket->second_flight->departure_date }}</small></td>
+                <td><small>{{ $flight_ticket->second_flight->arrival_date }}</small></td>
+            </tr>
+            @endif
         </table>
         <h3 class="headline">PASSENGER DETAILS</h3>
         <table>
@@ -136,11 +145,20 @@
                 <td><small>{{ $flight_ticket->add_on_baggage }}</small></td>
                 <td><small>CONFIRM</small></td>
             </tr>
+            @if(collect($flight_ticket->second_flight)->isNotEmpty()) 
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><small>{{ $flight_ticket->second_flight->add_on_baggage }}</small></td>
+                <td></td>
+            </tr>
+            @endif
         </table>
         <small class="total_amount"><strong>TOTAL AMOUNT</strong></small>
         <h2 class="total_amount">PHP {{ $flight_ticket->total_amount }}</h2>
         <br>
-        <h5 style="margin-top: 0px;">RULES AND REGULATIONS</h5>
+        <h5 style="margin-top: 0px; margin-bottom: 0px;">RULES AND REGULATIONS</h5>
         <small><strong>Check-in and Boarding Guidelines</strong></small>
         <p class="paragraph"><small>Check-in counters open 2 hours before scheduled time of flight departure and strictly close 45 minutes before flight departure. A confirmed booking shall be cancelled and released to waitlisted guests if you fail to check-in within the prescribed time. You must be at the boarding gate at least 30 minutes before flight departure as we close the gate 15 minutes before flight departure. Guests not at the boarding gate at the prescribed time will not be allowed to board the aircraft. </small></p>
         <small><strong>Baggage Information</strong></small>

@@ -17,7 +17,8 @@ class FlightTicketsController extends Controller
      */
     public function index()
     {
-        $flight_tickets = FlightTicket::all();
+        $flight_tickets = FlightTicket::where('primary_ticket_id', null)->get();
+        
         return view('flight_tickets.index')->with('flight_tickets', $flight_tickets);
     }
 
@@ -104,8 +105,37 @@ class FlightTicketsController extends Controller
         $flight_ticket->pnr = strtoupper($request->input('pnr'));
         $flight_ticket->save();
 
+        $this->save_second_ticket($flight_ticket, $request);
+
         return redirect('/flight_tickets');
     }
+
+    private function save_second_ticket(FlightTicket $flight_ticket, Request $request) {
+        if($request->input('flight_type') != 'round_trip')
+            return;
+        $flight_ticket_2 = new FlightTicket();
+        $flight_ticket_2->issue_date = $flight_ticket->issue_date;
+        $flight_ticket_2->booking_date = $flight_ticket->booking_date;
+        $flight_ticket_2->booking_reference = $flight_ticket->booking_reference;
+        $flight_ticket_2->flight_number = $flight_ticket->flight_number = strtoupper($request->input('flight_number_2'));
+        $flight_ticket_2->origin = $flight_ticket->origin = strtoupper($request->input('origin_2'));
+        $flight_ticket_2->destination = $flight_ticket->destination = strtoupper($request->input('destination_2'));
+        $flight_ticket_2->departure_date = $flight_ticket->departure_date = date('Y-n-d G:i:s', 
+            strtotime($request->input('departure_date_2')));
+        $flight_ticket_2->arrival_date = $flight_ticket->arrival_date = date('Y-n-d G:i:s', 
+            strtotime($request->input('arrival_date_2')));
+        $flight_ticket_2->passenger_name = $flight_ticket->passenger_name;
+        $flight_ticket_2->ticket_number = $flight_ticket->ticket_number;
+        $flight_ticket_2->pax_type = $flight_ticket->pax_type = $request->input('pax_type');
+        $flight_ticket_2->add_on_baggage = $flight_ticket->add_on_baggage = $request->input('add_on_baggage_2');
+        $flight_ticket_2->total_amount = $flight_ticket->total_amount = $request->input('total_amount');
+        $flight_ticket_2->airline_company_id = $flight_ticket->airline_company_id = $request->input('airline_company_id');
+        $flight_ticket_2->pnr = $flight_ticket->pnr = strtoupper($request->input('pnr'));
+        $flight_ticket_2->primary_ticket_id = $flight_ticket->id;
+        $flight_ticket_2->save();
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -116,6 +146,8 @@ class FlightTicketsController extends Controller
     public function show($id)
     {
         $flight_ticket = FlightTicket::find($id);
+        $flight_ticket->second_flight = FlightTicket::where('primary_ticket_id', $id)->get()->first();
+
         $pdf = PDF::loadView('flight_tickets.view', ['flight_ticket' => $flight_ticket]);
         // return '<pre>' . json_encode($flight_ticket, JSON_PRETTY_PRINT) . '</pre>';
         return $pdf->stream('flight_ticket.pdf');

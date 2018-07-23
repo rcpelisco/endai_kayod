@@ -8,8 +8,6 @@
 -- PHP Version: 7.1.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,21 +21,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `airline_companies`
---
-
-CREATE TABLE `airline_companies` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `logo_path` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
 -- Dumping data for table `airline_companies`
 --
 
@@ -48,25 +31,6 @@ INSERT INTO `airline_companies` (`id`, `name`, `address`, `phone_number`, `email
 (13, 'Tiger Air', 'Cebu', '6327984488', NULL, 'images/y5MpJLYWZFBdPAGcSDsXvPkDdqgHDejcGCUPTLT8.png', '2018-06-18 06:29:01', '2018-06-18 06:29:01'),
 (14, 'Cebgo', 'Baan Riverside', '091246745', 'cebgo@gmail.com', 'images/U3D41hS2iSI6MmlGVpTlD8adZGG3XZ38hCvReXHk.jpeg', '2018-06-29 12:31:03', '2018-06-29 12:31:03');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `airline_companies`
---
-ALTER TABLE `airline_companies`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `airline_companies`
---
-ALTER TABLE `airline_companies`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
