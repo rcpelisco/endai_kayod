@@ -37,9 +37,9 @@
                             @foreach($tutorials as $tutorial) 
                                 @if($tutorial->type == 'interest')
                                     <tr>
-                                        <td>{{ $tutorial->title }}</td>
+                                        <td><a href="{{route('tutorials.show', ['tutorial' => $tutorial->id])}}">{{ $tutorial->title }}</a></td>
                                         <td>{{ $tutorial->description }}</td>
-                                        <td>{{ count($tutorial->enrolled) }}</td>
+                                        <td>{{ count($tutorial->enrolled->where('active', 1)) }}</td>
                                         <td>{{ $tutorial->price }}</td>
                                         <td>
                                             <a href="{{route('tutorials.enroll', ['tutorial' => $tutorial->id])}}" 
@@ -77,7 +77,7 @@
                                     <tr>
                                         <td>{{ $tutorial->title }}</td>
                                         <td>{{ $tutorial->description }}</td>
-                                        <td>{{ count($tutorial->enrolled) }}</td>
+                                        <td>{{ count($tutorial->enrolled->where('active', 1)) }}</td>
                                         <td>{{ $tutorial->price }}</td>
                                         <td>
                                             <a href="{{route('tutorials.enroll', ['tutorial' => $tutorial->id])}}" class="btn btn-primary btn-sm">Enroll Student</a>

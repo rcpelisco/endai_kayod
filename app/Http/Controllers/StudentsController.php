@@ -22,6 +22,9 @@ class StudentsController extends Controller
             $student->academic_count = 0;
             $student->interest_count = 0;
             foreach($student->tutorials as $lesson) {
+                if($student->enrolled->where('tutorial_id', $lesson->id)->first()->active == 0) {
+                    continue;
+                }
                 if($lesson->type == 'academic') {
                     $student->academic_count += 1;
                     continue;
@@ -29,7 +32,7 @@ class StudentsController extends Controller
                 $student->interest_count += 1;
             }
         }
-        // return '<pre>' . json_encode($students, JSON_PRETTY_PRINT) . '</pre>';
+        // return '<pre>' . json_encode($students->first()->tutorials, JSON_PRETTY_PRINT) . '</pre>';
         return view('students.index')->with('students', $students);
     }
 

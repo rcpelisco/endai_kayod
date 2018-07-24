@@ -134,19 +134,33 @@ class StudentExtraController extends Controller
 
     public function re_enroll($enrolled_id) {
         $enrolled = Enrolled::find($enrolled_id);
-        $last_enrolled_date = EnrolledLog::where([
-            'transaction_type' => 'credit',
-            'enrolled_id' => $enrolled_id,
-        ])->latest()->first()->created_at;
+        
         $enrolled_log = new EnrolledLog();
         $enrolled_log->enrolled_id = $enrolled->id;
         $enrolled_log->amount = $enrolled->credit;
         $enrolled_log->transaction_type = 'credit';
-        $new_enroll_date = new Carbon($last_enrolled_date);
-        $new_enroll_date = $new_enroll_date->addMonth();
-        $enrolled_log->created_at = $new_enroll_date;
+        if($enrolled->tutorial->type == 'academic') {
+            $enrolled_log->created_at = $this->re_enroll_academic($enrolled_id);
+            $enrolled_log->save();
+            return back();
+        }
+        $enrolled = $this->re_enroll_interest($enrolled);
         $enrolled_log->save();
-
+        $enrolled->save();
         return back();
+    }
+
+    private function re_enroll_interest($enrolled) {
+        $enrolled->sessions_left = $enrolled->tutorial->sessions;
+        return $enrolled;
+    }
+
+    private function re_enroll_academic($enrolled_id) {
+        $last_enrolled_date = EnrolledLog::where([
+            'transaction_type' => 'credit',
+            'enrolled_id' => $enrolled_id,
+        ])->latest()->first()->created_at;
+        $new_enroll_date = new Carbon($last_enrolled_date);
+        return $new_enroll_date->addMonth();
     }
 }

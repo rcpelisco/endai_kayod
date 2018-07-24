@@ -36,11 +36,10 @@ class EnrolledController extends Controller
             'student_id' => 'required',
             'tutorial_id' => 'required',
         ]);
-
+        $tutorial = Tutorial::find($request->input('tutorial_id'));
         $enrolled = Enrolled::where(['student_id' => $request->input('student_id'), 
             'tutorial_id' => $request->input('tutorial_id')])->get();
-        // return $enrolled->isNotEmpty();
-
+        
         if($enrolled->isNotEmpty()) {
             $enrolled = Enrolled::find($enrolled->first()->id);
 
@@ -54,14 +53,12 @@ class EnrolledController extends Controller
         $enrolled->student_id = $request->input('student_id');
         $enrolled->tutorial_id = $request->input('tutorial_id');
 
-        $tutorial = Tutorial::find($request->input('tutorial_id'));
-
-        
-        if($tutorial->type == 'interest') {
-            $enrolled->sessions_left = 15;
+        if($tutorial->type == 'interest'){
+            $enrolled->sessions_left = $tutorial->sessions;
+            // return $enrolled;
         }
 
-        $enrolled->sessions_left = $request->input('sessions_left');
+        // $enrolled->sessions_left = $request->input('sessions_left');
         $enrolled->credit = $tutorial->price;
         $enrolled->active = 1;
 

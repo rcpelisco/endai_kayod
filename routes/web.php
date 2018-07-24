@@ -42,6 +42,7 @@ Route::post('students/pay_tutorial', ['uses' => 'StudentExtraController@pay_tuto
 Route::get('students/re_enroll/{enroll_id}', ['uses' => 'StudentExtraController@re_enroll', 'as' => 'students.re_enroll']);
 Route::get('tutorials/{tutorial}/enroll', ['uses' => 'TutorialsExtraController@enroll', 'as' => 'tutorials.enroll']);
 Route::post('tutorials/drop', ['uses' => 'TutorialsExtraController@drop', 'as' => 'tutorials.drop']);
+Route::post('tutorials/deduct_session', ['uses' => 'TutorialsExtraController@deduct_session', 'as' => 'tutorials.deduct_session']);
 
 Auth::routes();
 

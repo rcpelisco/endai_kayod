@@ -45,4 +45,11 @@ class TutorialsExtraController extends Controller
         
         return back();
     }
+
+    public function deduct_session(Request $request) {
+        $enrolled = Enrolled::find($request->input('enrolled_id'));
+        $enrolled->sessions_left -= $request->input('amount');
+        $enrolled->save();
+        return back();
+    }
 }

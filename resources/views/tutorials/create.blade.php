@@ -27,19 +27,19 @@
                 {{Form::label('price', 'Price')}}
                 {{Form::text('price', '', ['class' => 'form-control', 'placeholder' => 'Price'])}}
             </div>
-    
             <div class="form-group">
-                {{Form::label('type', 'Type:')}}
-                {{Form::select('type', [
-                    'interest' => 'Interest',
-                    'academic' => 'Academic',
-                ], null, ['class' => 'form-control'])}}
+                <label for="interest" class="radio-inline">
+                    {{ Form::radio('type', 'interest', true, ['id' => 'interest']) }}  Interest
+                </label>
+                <label for="academic" class="radio-inline">
+                    {{ Form::radio('type', 'academic', false, ['id' => 'academic']) }} Academic
+                </label>
             </div>
-{{-- 
+
             <div class="form-group" id="sessions_group">
-                {{Form::label('sessions_left', 'Sessions:')}}
-                {{Form::text('sessions_left',  '', ['class' => 'form-control', 'placeholder' => 'Sessions'])}}
-            </div> --}}
+                {{Form::label('sessions', 'Sessions:')}}
+                {{Form::text('sessions',  '', ['class' => 'form-control', 'placeholder' => 'Sessions'])}}
+            </div>
     
             {{ Form::submit('Submit', ['class'=>'btn btn-primary'])}}
         {!! Form::close() !!}
@@ -47,15 +47,13 @@
 </div>
 @endsection
 
-@section('scripts')
+@section('scriptu')
 <script>
-    $(() => {
-        let sessions_group = $('#sessions_group')
-        $('#type').change(() => {
-            let selected = $('#type option:selected').val()
-            sessions_group.show()
-            if(selected == 'academic') {
-                sessions_group.hide()
+    $(function() {
+        $('input[name="type"]').change(function() {
+        $('#sessions_group').show()
+            if ($(this).val() == 'academic'){
+                $('#sessions_group').hide()
             }
         })
     })

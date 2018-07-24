@@ -51,6 +51,10 @@ class TutorialsController extends Controller
         $tutorial->description = $request->input('description');
         $tutorial->price = $request->input('price');
         $tutorial->type = $request->input('type');
+        if($tutorial->type == 'interest'){
+            $tutorial->sessions = $request->input('sessions');
+        }
+
         $tutorial->active = 1;
 
         $tutorial->save();
@@ -67,7 +71,9 @@ class TutorialsController extends Controller
     public function show($id)
     {
         $tutorial = Tutorial::find($id);
-        return var_dump($tutorial->enrolled);
+        // return '<pre>' . json_encode($tutorial->students->first()->enrolled, 128) . '</pre>';
+        return view('tutorials.view')->with('tutorial', $tutorial);
+        // return var_dump($tutorial->enrolled);
     }
 
     public function view($id) {

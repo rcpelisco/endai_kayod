@@ -122,7 +122,7 @@
     </div>
 
     <div class="modal fade" id="payModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-sm" role="document">
             {!! Form::open(['action' => 'StudentExtraController@pay_tutorial' , 'method' => 'POST']) !!}
             <div class="modal-content">
                 <div class="modal-header">
@@ -153,11 +153,12 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title"></h4>
+                    
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xs-6">Enroll Date</div>
-                        <div class="col-xs-6">Due Date</div>
+                        <div class="col-xs-6" id="due_date">Due Date</div>
                     </div>
                     <hr style="margin-bottom: 10px; margin-top: 0px">
                     <div id="dates">
@@ -196,6 +197,8 @@
     })
 
     $('.recordsModalButton').click(function() {
+        if($('#reEnrollButton').hasClass('disabled'))
+            $('#reEnrollButton').removeClass('disabled')
         let enrolledID = $(this).attr('data-enrolled-id')
         get_tutorial_due(enrolledID)
         $('#recordsModal').modal()
@@ -241,11 +244,13 @@
             url:'get_tutorial_due/' + enrolledID,
             data:'_token = <?php echo csrf_token() ?>',
             success: (data) => {
-                $('.modal-title').html(data.tutorial.title)
+                console.log(data)
+                let title = data.tutorial.title
+                
                 $('input[name="enrolled_id"]').val(data.id)
                 $('input[name="credit"]').val(data.credit)
                 $('#enrollDate').html(data.formattedEnrollDate)
-                $('#dueDate').html(data.formattedDueDate)
+                
                 $('#total').html(data.totalDue - data.totalPaid)
                 let payments = ''
                 let dates = ''
@@ -260,8 +265,21 @@
                     if(element.paid == true) {
                         dates += ' text-primary'
                     }
-                    dates += '">' + element.formattedDueDate +  '</div></div>'
+                    dates += '">'
+                    if(data.tutorial.type != 'interest') {
+                        dates += element.formattedDueDate
+                    }
+                    dates +=  '</div></div>'
                 })
+                if(data.tutorial.type === 'interest') {
+                    title += '<small id="sessions_left"> - (Sessions Left: ' 
+                        + data.sessions_left + ')</small>'
+                    $('#due_date').hide()
+                }
+                if(data.sessions_left > 0) {
+                    $('#reEnrollButton').addClass('disabled');
+                }
+                $('.modal-title').html(title)
                 $('#payments').html(payments)
                 $('#dates').html(dates);
                 $('#reEnrollButton').attr('href', 're_enroll/' + data.id)
