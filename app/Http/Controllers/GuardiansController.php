@@ -7,6 +7,11 @@ use App\Guardian;
 
 class GuardiansController extends Controller
 {
+    public function __construct() 
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -50,8 +55,10 @@ class GuardiansController extends Controller
         $guardians->address = $request->input('address');
         $guardians->active = 1;
         $guardians->save();
-
-        return redirect('/guardians');
+        if($request->input('ref') == 'students') {
+            return redirect(route('students.create'));
+        }
+        return redirect(route('guardians.index'));
     }
 
     /**

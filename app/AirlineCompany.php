@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class AirlineCompany extends Model
 {
     public function flight_ticket() {

@@ -44,6 +44,21 @@ Route::get('tutorials/{tutorial}/enroll', ['uses' => 'TutorialsExtraController@e
 Route::post('tutorials/drop', ['uses' => 'TutorialsExtraController@drop', 'as' => 'tutorials.drop']);
 Route::post('tutorials/deduct_session', ['uses' => 'TutorialsExtraController@deduct_session', 'as' => 'tutorials.deduct_session']);
 
+Route::get('boarding_house', ['uses' => 'BoardingHouseController@index', 'as' => 'boarding_house.index']);
+Route::get('boarding_house/create', ['uses' => 'BoardingHouseController@create', 'as' => 'boarding_house.create']);
+Route::post('boarding_house', ['uses' => 'BoardingHouseController@store', 'as' => 'boarding_house.store']);
+Route::get('boarding_house/{room}', ['uses' => 'BoardingHouseController@show', 'as' => 'boarding_house.show']);
+Route::get('boarding_house/{room}/edit', ['uses' => 'BoardingHouseController@edit', 'as' => 'boarding_house.edit']);
+Route::delete('boarding_house/{room}', ['uses' => 'BoardingHouseController@destroy', 'as' => 'boarding_house.destroy']);
+Route::post('boarding_house/{room}/create_boarder', ['uses' => 'BoardingHouseController@createBoarder', 'as' => 'boarding_house.create_boarder']);
+
+Route::get('boarders', ['uses' => 'BoardersController@index', 'as' => 'boarders.index']);
+Route::get('boarders/create', ['uses' => 'BoardersController@create', 'as' => 'boarders.create']);
+Route::post('boarders', ['uses' => 'BoardersController@store', 'as' => 'boarders.store']);
+Route::get('boarders/{boarder}', ['uses' => 'BoardersController@show', 'as' => 'boarders.show']);
+Route::delete('boarders/{boarder}', ['uses' => 'BoardersController@destroy', 'as' => 'boarders.destroy']);
+Route::post('boarders/{boarder}/pay', ['uses' => 'PaymentsController@store', 'as' => 'boarders.pay']);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

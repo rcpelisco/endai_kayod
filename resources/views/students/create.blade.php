@@ -41,7 +41,7 @@
                     {{Form::label('guardian_id' , 'Guardian')}}
                     {{Form::select('guardian_id', $guardians, null, ['class' => 'form-control select-form-control'])}}
                 </div>
-                <a href="/guardians/create" class="btn btn-sm btn-success pull-right">Add Guardian</a>
+                <a href="/guardians/create?ref=students" class="btn btn-sm btn-success pull-right">Add Guardian</a>
             {{ Form::submit('Submit' , ['class'=>'btn btn-primary'])}}
             {!! Form::close() !!}
 

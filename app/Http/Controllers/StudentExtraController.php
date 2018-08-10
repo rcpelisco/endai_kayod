@@ -11,6 +11,11 @@ use Carbon\Carbon;
 
 class StudentExtraController extends Controller
 {
+    public function __construct() 
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Set the tutorial as paid form the said resource.
      *

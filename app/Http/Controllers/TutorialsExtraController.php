@@ -9,6 +9,11 @@ use App\Enrolled;
 
 class TutorialsExtraController extends Controller
 {
+    public function __construct() 
+    {
+        $this->middleware('auth');
+    }
+    
     public function enroll($id) {
         $tutorial = Tutorial::find($id);
         $students = Student::where('active', 1)->get();

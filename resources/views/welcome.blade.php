@@ -6,7 +6,7 @@
 
 @section('content')
 	<div class="row">
-		<div class="col-xs-6 col-md-4">
+		<div class="col-md-3">
 			<div class="panel panel-default">
 				<div class="panel-body easypiechart-panel">
 					<h4>Products</h4>
@@ -18,7 +18,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-6 col-md-4">
+		<div class="col-md-3">
 			<div class="panel panel-default">
 				<div class="panel-body easypiechart-panel">
 					<h4>Tutorials</h4>
@@ -30,7 +30,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-6 col-md-4">
+		<div class="col-md-3">
 			<div class="panel panel-default">
 				<div class="panel-body easypiechart-panel">
 					<h4>Flight Ticketing</h4>
@@ -41,14 +41,18 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		{{-- <div class="col-xs-6 col-md-3">
+    </div>
+		<div class="col-md-3">
 			<div class="panel panel-default">
 				<div class="panel-body easypiechart-panel">
-					<h4>Visitors</h4>
-					<div class="easypiechart"><span class="percent">27%</span></div>
+					<h4>Boarding House</h4>
+					<div class="easypiechart"><span class="percent">
+						<a href="{{route('boarding_house.index')}}">
+							<button class="btn btn-primary">Open</button></span>
+						</a>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div> --}}
+    </div>
+  </div>
 @endsection

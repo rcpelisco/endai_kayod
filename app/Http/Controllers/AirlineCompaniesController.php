@@ -8,6 +8,11 @@ use App\AirlineCompany;
 
 class AirlineCompaniesController extends Controller
 {
+    public function __construct() 
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -45,14 +50,13 @@ class AirlineCompaniesController extends Controller
         ]);
 
         $path = $request->file('logo_path')->store('images');
-
+            
         $airline_company = new AirlineCompany();
         $airline_company->name = $request->input('name');
         $airline_company->address = $request->input('address');
         $airline_company->phone_number = $request->input('phone_number');
         $airline_company->email = $request->input('email');
         $airline_company->logo_path = $path;
-
         $airline_company->save();
 
         $request->file('logo_path')->move(public_path('images'), $path);

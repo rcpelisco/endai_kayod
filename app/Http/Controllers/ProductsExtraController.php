@@ -12,6 +12,11 @@ use App\BuyersPurchasedProduct;
 
 class ProductsExtraController extends Controller
 {
+    public function __construct() 
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Show all the products available for buying.
      *
