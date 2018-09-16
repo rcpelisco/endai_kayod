@@ -53,7 +53,7 @@
                               . ' ' . $room->boarders->where('active', 1)->first()->last_name
                               . '</a>';}
                           @endphp</td>
-                          <td>{{ $room->type }}</td>
+                          <td>{{ ucwords(ucwords($room->type)) }}</td>
                           <td>{{ $room->price }}</td>
                           <td>
                             <button data-roomID="{{ $room->id }}" class="btn btn-primary btn-xs addBorderButton">
@@ -81,7 +81,7 @@
                       <tr>
                         <td>{{ $room->name }}</td>
                         <td>{{ $room->max_cap }}</td>
-                        <td>{{ $room->type }}</td>
+                        <td>{{ ucwords($room->type) }}</td>
                         <td>{{ $room->price }}</td>
                         <td></td>
                       </tr>
@@ -105,7 +105,7 @@
                         <tr>
                           <td>{{ $room->name }}</td>
                           <td>{{ $room->max_cap }}</td>
-                          <td>{{ $room->type }}</td>
+                          <td>{{ ucwords($room->type) }}</td>
                           <td>{{ $room->price }}</td>
                           <td></td>
                         </tr>

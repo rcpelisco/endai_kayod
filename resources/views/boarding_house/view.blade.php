@@ -23,6 +23,7 @@
     }
     .display-inline-block {
       display: inline-block;
+      margin-bottom: 0px;
     }
     .display-inline-block + h4.pull-right {
       margin-top: 20px;
@@ -35,6 +36,9 @@
       margin-top: 0px;
       margin-bottom: 0px;
     }
+    .mt-25 {
+      margin-top: 25px;
+    }
 </style>
 @endsection
 
@@ -42,39 +46,95 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <div class="row">
-      <div class="col-xs-6">
-        <h3 class="display-inline-block">Type</h3>
-        <h4 class="pull-right display-inline-block">
-          {{ $room->type }}
-        </h4>
-        <hr class="my-2">
-        <h3 class="display-inline-block">Location</h3>
-        <h4 class="pull-right display-inline-block">
-          {{ $room->location }}
-        </h4>
-        <hr class="my-2">
-        <h3 class="display-inline-block">Price</h3>
-        <h4 class="pull-right display-inline-block">
-          {{ $room->price }}
-        </h4>
-        <hr class="my-2">
-        {!! Form::open(['action' => ['BoardingHouseController@destroy', $room->id], 'method' => 'POST']) !!}
-          <a href="{{route('boarding_house.edit', $room->id)}}" class="btn btn-sm btn-warning">Edit  <em class="fa fa-edit"></em></a>
-          {{ Form::hidden('_method', 'DELETE') }}
-          {{ Form::button('<em class="fa fa-trash"></em>', ['type' => 'submit', 'class'=>'btn btn-danger btn-sm'])}}
-        {!! Form::close() !!}
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3 class="display-inline-block">Room Info</h3>
+            <hr class="my-2">
+            <div class="row">
+              <div class="col-xs-8">
+                Room Name: 
+              </div>
+              <div class="col-xs-4">
+                {{ $room->name }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-8">
+                Room Type: 
+              </div>
+              <div class="col-xs-4">
+                {{ $room->type }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-8">
+                Room Location: 
+              </div>
+              <div class="col-xs-4">
+                {{ $room->location }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                Room Price: 
+              </div>
+              <div class="col-xs-5">
+                &#8369; 
+                <span class="pull-right">
+                  {{ number_format($room->price, 2) }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          
+        </div>
       </div>
-      <div class="col-xs-6">
-        @if($room->type == 'monthly')
-          <h3>In Charge</h3>
-        @else
-          <h3>Boarders</h3>
-        @endif
+      <div class="col-md-6">
+        <h3>Reserved</h3>
         <hr class="my-2">
-        @foreach($room->boarders->where('active', 1) as $boarder) 
-          {{ $boarder->first_name . ' ' . $boarder->last_name }}
-          <hr class="my-0">
-        @endforeach
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table">
+              <thead>
+                <tr>
+                  <td>Name</td>
+                  <td>Start Date</td>
+                  <td>End Date</td>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($room->reservations->where('date_start', '>=', Carbon\Carbon::now()) as $reservation)
+                <tr>
+                  <td>{{ $reservation->first_name . ' ' . $reservation->last_name }}</td>
+                  <td>{{ $reservation->date_start->format('F d, Y') }}</td>
+                  <td>{{ $reservation->date_end->format('F d, Y') }}</td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="paymentModalLabel">Payment <small>form</small></h4>
+      </div>
+      <div class="modal-body">
+        {{Form::label('amount' , 'Amount')}}
+        {{Form::number('amount' , '', ['class' => 'form-control' , 'placeholder' => 'Amount'])}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

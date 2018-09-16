@@ -59,6 +59,10 @@ Route::get('boarders/{boarder}', ['uses' => 'BoardersController@show', 'as' => '
 Route::delete('boarders/{boarder}', ['uses' => 'BoardersController@destroy', 'as' => 'boarders.destroy']);
 Route::post('boarders/{boarder}/pay', ['uses' => 'PaymentsController@store', 'as' => 'boarders.pay']);
 
+Route::get('reservations', ['uses' => 'ReservationsController@index', 'as' => 'reservation.index']);
+Route::post('reservations', ['uses' => 'ReservationsController@store', 'as' => 'reservation.store']);
+Route::get('reservations/events', ['uses' => 'ReservationsController@events', 'as' => 'reservation.events']);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -22,6 +22,8 @@ class CreateBoardersTable extends Migration
             $table->string('agreement', 191)->nullable();
             $table->integer('room_id')->unsigned();
             $table->boolean('active')->default(1);
+            $table->date('date_start')->nullable();
+            $table->date('date_end')->nullable();
             $table->timestamps();
         });
     }

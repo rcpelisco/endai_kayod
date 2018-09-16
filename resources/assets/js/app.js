@@ -23,3 +23,5 @@ require('./bootstrap');
 
 require('./jquery.dataTables.min')
 require('./dataTables.bootstrap.min')
+require('fullcalendar')
+require('moment')
